@@ -15,8 +15,6 @@ public class run extends JFrame{
     private void initUI() {
         this.add(new Game());
 
-
-
         setSize(BOARD_WIDTH, BOARD_HEIGHT);
         setResizable(false);
 
@@ -27,6 +25,7 @@ public class run extends JFrame{
     }
 
     public static void main(String[] args) {
+
         new run();
     }
 }

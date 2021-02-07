@@ -1,4 +1,6 @@
 package Game;
+import Sprites.Bullets.*;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +19,7 @@ public abstract class GameObjectsManager {
     protected int height;
     private boolean ObjectState;
     private boolean visible;
+    private Missiles missile;
 
     //Parameterize Constructor
     public GameObjectsManager(int height, int width, int x, int y, ID id) {
@@ -40,6 +43,12 @@ public abstract class GameObjectsManager {
     public void explosion() {
         loadImage("explosion.png");
         setObjectState(true);
+    }
+
+    public void shoot() {
+        missile.setX(x);
+        missile.setY(y);
+        missile.setVisibility(true);
     }
 
 
@@ -125,9 +134,6 @@ public abstract class GameObjectsManager {
 
 
 
-    public void move() {
-        x += velX;
-        y += velY;
-    }
+    public abstract void move();
 
 }

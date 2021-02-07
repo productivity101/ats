@@ -29,23 +29,24 @@ public class Player extends GameObjectsManager {
     }
 
     public void revive() {
-    	if (id == ID.Player) loadImage("player.png");
+        if (id == ID.Player) loadImage("player.png");
         else loadImage("player2.png");
         setObjectState(false);
-        x=BOARD_WIDTH/2;
+        if (id == ID.Player) x=BOARD_WIDTH/2-180;
+        else x=BOARD_WIDTH/2;
     }
-
     public void missileMove() {
         if(missile.getVisibility()) {
             missile.move();
         }
     }
-    
-    public void shoot() {
-    	missile.setX(x+18);
-    	missile.setY(y);
-    	missile.setVisibility(true);
+    @Override
+    public void shoot(){
+        missile.setX(x+18);
+        missile.setY(y);
+        missile.setVisibility(true);
     }
+
     
     @Override
     public void move() {
@@ -54,7 +55,8 @@ public class Player extends GameObjectsManager {
         else if(x<0)
             x=0;
         else
-            super.move();
+            x += velX;
+            y += velY;
     }
 
 }
