@@ -46,7 +46,8 @@ public class Bullets extends GameObjectsManager {
     public void move() {
         if(y<=0)
             this.dead();
-        super.move();
+        x += velX;
+        y += velY;
     }
 
 }

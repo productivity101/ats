@@ -86,7 +86,7 @@ public class EnemyWaves {
 
     public void shooting() {
         for(Enemy enemy: enemies) {
-            enemy.tryToShoot();
+            enemy.shoot();
         }
     }
 

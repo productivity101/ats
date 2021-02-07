@@ -1,7 +1,10 @@
 package Game;
 
 import javax.swing.*;
+import Game.repeated.*;
 
+import static Game.repeated.BOARD_HEIGHT;
+import static Game.repeated.BOARD_WIDTH;
 
 public class run extends JFrame{
 
@@ -11,9 +14,6 @@ public class run extends JFrame{
 
     private void initUI() {
         this.add(new Game());
-
-         int BOARD_HEIGHT=630;
-          int BOARD_WIDTH=800;
 
         setSize(BOARD_WIDTH, BOARD_HEIGHT);
         setResizable(false);
@@ -25,6 +25,7 @@ public class run extends JFrame{
     }
 
     public static void main(String[] args) {
+
         new run();
     }
 }

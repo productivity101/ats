@@ -79,22 +79,23 @@ public class Game extends JPanel {
             super.addNotify();
 
             Thread animator = new Thread(this::run);
+
             animator.start();
-
-
     }
 
 
     public void run() {
 
+
         long beforeTime, timeDiff, sleep;
 
         beforeTime = System.currentTimeMillis();
-        while(level < 4 && !gameOver) {
+        while(level < 6 && !gameOver) {
             while(inGame) {
                 repaint();
-                animationCycle();       //mechanics of a game
-
+                if (State == STATE.GAME) {
+                    animationCycle();       //mechanics of a game
+                }
                 timeDiff = System.currentTimeMillis() - beforeTime;
                 sleep = DELAY - timeDiff;
 
@@ -113,7 +114,7 @@ public class Game extends JPanel {
             player2=new Player(PLAYER_HEIGHT, PLAYER_WIDTH,START_X-180, START_Y,ID.Player2);
             enemyWave = new EnemyWaves(level);
 
-            
+
             inGame = true;
         }
         gameOver();

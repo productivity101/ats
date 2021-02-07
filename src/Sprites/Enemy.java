@@ -28,7 +28,8 @@ public class Enemy extends GameObjectsManager {
         bomb=new Bullets.Bombs(24,8, 0, 0,id);
         bomb.dead();
     }
-    public void tryToShoot() {
+    @Override
+    public void shoot() {
         int random = rand.nextInt()%400;
         if(random==1 && !this.bomb.getVisibility() && this.getVisibility()){
             this.bomb.setX(this.x + (ENEMY_WIDTH / 2));
@@ -44,7 +45,8 @@ public class Enemy extends GameObjectsManager {
 
     @Override
     public void move() {
-        super.move();
+        x += velX;
+        y += velY;
     }
 
 }
