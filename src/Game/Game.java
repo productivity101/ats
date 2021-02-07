@@ -188,6 +188,7 @@ public class Game extends JPanel {
 
         if(enemyWave.reachedTheGround()) {
             inGame=false;
+            gameOver = true;
             message="Game Over!";
         }
 
@@ -207,7 +208,6 @@ public class Game extends JPanel {
         enemyWave.shooting();
         enemyWave.accelerateIfNeeded(level);
         enemyWave.turnAroundIfHitTheWall();
-        gameOver = enemyWave.reachedTheGround();
     }
 
     private void collisionMissileEnemies() {
