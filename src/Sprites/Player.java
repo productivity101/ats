@@ -14,7 +14,8 @@ public class Player extends GameObjectsManager {
     //Constructor
     public Player(int height, int width, int x, int y, ID id) {
         super(height, width,x, y, id);
-        loadImage("player.png");
+        if (id == ID.Player) loadImage("player.png");
+        else loadImage("player2.png");
         missile = new Bullets.Missiles(8, 2, x,  y, ID.Missles);
         missile.dead();
     }
@@ -28,9 +29,11 @@ public class Player extends GameObjectsManager {
     }
 
     public void revive() {
-        loadImage("player.png");
+    	if (id == ID.Player) loadImage("player.png");
+        else loadImage("player2.png");
         setObjectState(false);
-        x=BOARD_WIDTH/2;
+        if (id == ID.Player) x=BOARD_WIDTH/2-180;
+        else x=BOARD_WIDTH/2;
     }
 
     public void missileMove() {
