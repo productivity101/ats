@@ -31,7 +31,7 @@ public class Game extends JPanel {
     private int START_Y=560;
     private int PLAYER_WIDTH=46;
     private int PLAYER_HEIGHT=32;
-
+    private int SCORE = 0;
 
     private boolean inGame;
     private Integer lives, lives2;
@@ -131,10 +131,9 @@ public class Game extends JPanel {
             g.setFont(font);
 
             g.drawString("Player 1 Lives: " + lives.toString(), BOARD_WIDTH - 220, 25);
-            g.drawString("Enemies Left: " + enemyWave.getNumberOfEnemies().toString(), 28, 25);
-
             g.drawString("Player 2 Lives: " + lives2.toString(), BOARD_WIDTH - 220, 55);
-
+            g.drawString("Enemies Left: " + enemyWave.getNumberOfEnemies().toString(), 28, 25);
+            g.drawString("Score: " + SCORE, BOARD_WIDTH/2-50, 25);
 
             g.setColor(VERY_DARK_GREEN);
             g.drawLine(0, GROUND, BOARD_WIDTH, GROUND);
@@ -216,12 +215,15 @@ public class Game extends JPanel {
                 if(enemy.getVisibility() && player.getMissile().collisionWith(enemy)) {
                     enemy.explosion();
                     player.getMissile().dead();
+                    SCORE++;
                 }
-        }else if(player2.getMissile().getVisibility()) {
+        }
+        if(player2.getMissile().getVisibility()) {
             for (Enemy enemy : enemyWave.getEnemies())
                 if(enemy.getVisibility() && player2.getMissile().collisionWith(enemy)) {
                     enemy.explosion();
                     player2.getMissile().dead();
+                    SCORE++;
                 }
         }
     }
@@ -250,6 +252,7 @@ public class Game extends JPanel {
         g.setColor(Color.WHITE);
         g.setFont(font);
         g.drawString(message, (BOARD_WIDTH-ft.stringWidth(message))/2, BOARD_HEIGHT/2);
+        g.drawString("Final Score: "+SCORE, (BOARD_WIDTH-10)/2-100, BOARD_HEIGHT/2+50);
     }
 
     private class KAdapter extends KeyAdapter {
