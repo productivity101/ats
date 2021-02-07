@@ -35,8 +35,8 @@ public class EnemyWaves {
     
     public EnemyWaves(int level) {
         enemies = new ArrayList<>();
-        for(int i=0; i<level*2; i++) {
-            for (int j = 0; j < level*2; j++) {
+        for(int i=0; i<level; i++) {
+            for (int j = 0; j < level*3; j++) {
                 enemies.add(new Enemy(ENEMY_WIDTH, ENEMY_HEIGHT=38, ENEMY_X + 32 * j, ENEMY_Y + 32 * i, ID.Enemy));
             }
         }
