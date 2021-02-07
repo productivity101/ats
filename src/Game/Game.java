@@ -215,14 +215,12 @@ public class Game extends JPanel {
             for (Enemy enemy : enemyWave.getEnemies())
                 if(enemy.getVisibility() && player.getMissile().collisionWith(enemy)) {
                     enemy.explosion();
-                    enemyWave.decreaseNumberOfEnemies();
                     player.getMissile().dead();
                 }
         }else if(player2.getMissile().getVisibility()) {
             for (Enemy enemy : enemyWave.getEnemies())
                 if(enemy.getVisibility() && player2.getMissile().collisionWith(enemy)) {
                     enemy.explosion();
-                    enemyWave.decreaseNumberOfEnemies();
                     player2.getMissile().dead();
                 }
         }
