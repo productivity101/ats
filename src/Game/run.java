@@ -12,6 +12,9 @@ public class run extends JFrame{
         initUI();
     }
 
+    /*
+     * UI for the game
+     */
     private void initUI() {
         this.add(new Game());
 

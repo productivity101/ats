@@ -44,8 +44,9 @@ public class Game extends JPanel {
     public static enum STATE{
         MENU,
         GAME,
-        PAUSE
-    };
+        PAUSE,
+        QUIT
+    }
 
     public static STATE State = STATE.MENU;
 
@@ -120,13 +121,15 @@ public class Game extends JPanel {
         gameOver();
     }
 
-
+    /*
+     * Setup the GUI for the game
+     */
     @Override
     public void paintComponent(Graphics g) {
+
         if (State == STATE.GAME) {
             super.paintComponent(g);
             g.drawImage(img, 0, 0, null); // background image
-
             Font font = new Font("Roboto", Font.PLAIN, 18);
             g.setColor(Color.white);
             g.setFont(font);
@@ -154,8 +157,40 @@ public class Game extends JPanel {
             menu.render(g);
             super.paintComponent(g);
             g.setColor(Color.green); // background image
-        }else if(State == STATE.PAUSE){
+        }else if(State == STATE.PAUSE) {
+            // Need to change the pause menu
+            super.paintComponent(g);
+            g.drawImage(img, 0, 0, null); // background image
 
+            Font font = new Font("Roboto", Font.PLAIN, 18);
+            g.setColor(Color.white);
+            g.setFont(font);
+
+            g.drawString("Player 1 Lives: " + lives.toString(), BOARD_WIDTH - 220, 25);
+            g.drawString("Player 2 Lives: " + lives2.toString(), BOARD_WIDTH - 220, 55);
+            g.drawString("Enemies Left: " + enemyWave.getNumberOfEnemies().toString(), 28, 25);
+            g.drawString("Score: " + SCORE, BOARD_WIDTH / 2 - 50, 25);
+            font = new Font("Roboto", Font.PLAIN, 32);
+            g.setFont(font);
+            g.setColor(VERY_DARK_GREEN);
+            g.drawLine(0, GROUND, BOARD_WIDTH, GROUND);
+
+            player.draw(g, this);
+            if (player.getMissile().getVisibility())
+                player.getMissile().draw(g, this);
+
+            //create
+            player2.draw(g, this);
+            if (player2.getMissile().getVisibility())
+                player2.getMissile().draw(g, this);
+
+            enemyWave.draw(g, this);
+            g.setColor(Color.white);
+            g.drawString("Pause ", BOARD_WIDTH / 2 - 50, 150);
+
+        }
+        else if (State == STATE.QUIT) {
+            System.exit(0);
         }
 
 
@@ -256,7 +291,7 @@ public class Game extends JPanel {
         g.drawString("Final Score: "+SCORE, (BOARD_WIDTH-10)/2-100, BOARD_HEIGHT/2+50);
     }
 
-    private class KAdapter extends KeyAdapter {
+    private class KAdapter extends KeyAdapter  {
 
     	public void keyPressed(KeyEvent e) {
             if (State == STATE.GAME) {
@@ -270,6 +305,15 @@ public class Game extends JPanel {
                 if (key == KeyEvent.VK_RIGHT) player2.setVelX(player2.getSpeed());
                 if (key == KeyEvent.VK_UP && !player2.getMissile().getVisibility()) {
                     player2.shoot();
+                }
+                if (key == KeyEvent.VK_P) {
+                    State = STATE.PAUSE;
+                }
+            }
+            else if (State == STATE.PAUSE) {
+                int key = e.getKeyCode();
+                if  (key == KeyEvent.VK_P) {
+                    State = STATE.GAME;
                 }
             }
             else if(State == STATE.MENU){
