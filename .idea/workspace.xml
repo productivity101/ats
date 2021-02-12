@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f5a5a6fe-b3e6-4c2f-b4b1-b112762ca9f0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game/GameObjectsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/GameObjectsManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game/run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/run.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Sprites/Bullets.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sprites/Bullets.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Sprites/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sprites/Enemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Sprites/EnemyWaves.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sprites/EnemyWaves.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Sprites/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sprites/Player.java" afterDir="false" />
-    </list>
+    <list default="true" id="f5a5a6fe-b3e6-4c2f-b4b1-b112762ca9f0" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -38,6 +36,17 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Game.run" />
       <module name="ict1009-team46-2021" />
@@ -47,17 +56,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>

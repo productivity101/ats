@@ -264,12 +264,12 @@ public class Game extends JPanel {
                 if (key == KeyEvent.VK_A) player.setVelX(-player.getSpeed());
                 if (key == KeyEvent.VK_D) player.setVelX(player.getSpeed());
                 if (key == KeyEvent.VK_W && !player.getMissile().getVisibility()) {
-                    player.shoot();
+                    player.shootMyself();
                 }
                 if (key == KeyEvent.VK_LEFT) player2.setVelX(-player2.getSpeed());
                 if (key == KeyEvent.VK_RIGHT) player2.setVelX(player2.getSpeed());
                 if (key == KeyEvent.VK_UP && !player2.getMissile().getVisibility()) {
-                    player2.shoot();
+                    player2.shootMyself();
                 }
             }
             else if(State == STATE.MENU){
