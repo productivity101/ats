@@ -46,8 +46,7 @@ public class Player extends GameObjectsManager{
         missile.setY(y);
         missile.setVisibility(true);
     }
-    
-    @Override
+
     public void move() {
         if(x>BOARD_WIDTH-PLAYER_WIDTH)
             x=BOARD_WIDTH-PLAYER_WIDTH;
@@ -57,5 +56,21 @@ public class Player extends GameObjectsManager{
             x += velX;
             y += velY;
     }
+
+    public void move(Integer spid) {
+        if(x>BOARD_WIDTH-PLAYER_WIDTH)
+            x=BOARD_WIDTH-PLAYER_WIDTH;
+        else if(x<0) {
+            x = 0;
+        }
+        else {
+//            x += velX + (spid/2);
+//            y += velY + (spid/2);
+            x += velX * (spid/2);
+            y += velY * (spid/2);
+        }
+    }
+
+    // when level = 3, increment the speed by overloading the move function
 
 }

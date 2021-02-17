@@ -50,6 +50,9 @@ public class Game extends JPanel {
 
     public static STATE State = STATE.MENU;
 
+    public Integer getLevel(){
+        return this.level;
+    }
 
     Game() {
 
@@ -137,7 +140,8 @@ public class Game extends JPanel {
             g.drawString("Player 1 Lives: " + lives.toString(), BOARD_WIDTH - 220, 25);
             g.drawString("Player 2 Lives: " + lives2.toString(), BOARD_WIDTH - 220, 55);
             g.drawString("Enemies Left: " + enemyWave.getNumberOfEnemies().toString(), 28, 25);
-            g.drawString("Score: " + SCORE, BOARD_WIDTH/2-50, 25);
+            g.drawString("LEVEL: " + level, BOARD_WIDTH/2-50, 25);
+            g.drawString("Score: " + SCORE, BOARD_WIDTH/2-48, 55);
 
             g.setColor(VERY_DARK_GREEN);
             g.drawLine(0, GROUND, BOARD_WIDTH, GROUND);
@@ -169,7 +173,8 @@ public class Game extends JPanel {
             g.drawString("Player 1 Lives: " + lives.toString(), BOARD_WIDTH - 220, 25);
             g.drawString("Player 2 Lives: " + lives2.toString(), BOARD_WIDTH - 220, 55);
             g.drawString("Enemies Left: " + enemyWave.getNumberOfEnemies().toString(), 28, 25);
-            g.drawString("Score: " + SCORE, BOARD_WIDTH / 2 - 50, 25);
+            g.drawString("LEVEL: " + level, BOARD_WIDTH/2-50, 25);
+            g.drawString("Score: " + SCORE, BOARD_WIDTH/2-48, 55);
             font = new Font("Roboto", Font.PLAIN, 32);
             g.setFont(font);
             g.setColor(VERY_DARK_GREEN);
@@ -226,11 +231,19 @@ public class Game extends JPanel {
             gameOver = true;
             message="Game Over!";
         }
+        if (getLevel() == 1){
+            player.move();
+            player.missileMove();
+            player2.move();
+            player2.missileMove();
+        }
+        if (getLevel() > 1){
+            player.move(getLevel());
+            player.missileMove();
+            player2.move(getLevel());
+            player2.missileMove();
+        }
 
-        player.move();
-        player.missileMove();
-        player2.move();
-        player2.missileMove();
         enemyWaveMove();
         collisionMissileEnemies();
         collisionBombPlayer();
@@ -332,6 +345,8 @@ public class Game extends JPanel {
 
             }
         }
+
+
 
 
 

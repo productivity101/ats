@@ -42,8 +42,6 @@ public class Enemy extends GameObjectsManager{
         this.almostDied = almostDied;
     }
 
-
-    @Override
     public void move() {
         x += velX;
         y += velY;

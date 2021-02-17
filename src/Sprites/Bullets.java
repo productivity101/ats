@@ -41,8 +41,7 @@ public class Bullets extends GameObjectsManager {
         }
 
     }
-    
-    @Override
+
     public void move() {
         if(y<=0)
             this.dead();
