@@ -19,6 +19,7 @@ public class EnemyWaves {
     private int ENEMY_HEIGHT=38;
     private int ENEMY_X=0;
     private int ENEMY_Y=30;
+    private int level=0;
 
 
     public List<Enemy> getEnemies() {
