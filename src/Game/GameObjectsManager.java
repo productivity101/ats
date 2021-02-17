@@ -25,7 +25,7 @@ public abstract class GameObjectsManager {
     public GameObjectsManager(int height, int width, int x, int y, ID id) {
         this.height = height;
         this.width = width;
-    	
+    
     	this.x = x;
         this.y = y;
         this.id = id;

@@ -6,7 +6,7 @@ import Game.GameObjectsManager;
 import Game.ID;
 import Game.Shooterino;
 
-public class Player extends GameObjectsManager implements Shooterino {
+public class Player extends GameObjectsManager{
     private static final int PLAYER_WIDTH =46 ;
     private int PLAYER_SPEED=2;
 

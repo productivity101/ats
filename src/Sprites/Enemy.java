@@ -6,7 +6,7 @@ import Game.Shooterino;
 
 import java.util.Random;
 
-public class Enemy extends GameObjectsManager implements Shooterino {
+public class Enemy extends GameObjectsManager{
     private int ENEMY_WIDTH=38;
     private int ENEMY_HEIGHT=38;
 
