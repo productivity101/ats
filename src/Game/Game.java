@@ -173,7 +173,8 @@ public class Game extends JPanel {
             g.drawString("Player 1 Lives: " + lives.toString(), BOARD_WIDTH - 220, 25);
             g.drawString("Player 2 Lives: " + lives2.toString(), BOARD_WIDTH - 220, 55);
             g.drawString("Enemies Left: " + enemyWave.getNumberOfEnemies().toString(), 28, 25);
-            g.drawString("Score: " + SCORE, BOARD_WIDTH / 2 - 50, 25);
+            g.drawString("LEVEL: " + level, BOARD_WIDTH/2-50, 25);
+            g.drawString("Score: " + SCORE, BOARD_WIDTH/2-48, 55);
             font = new Font("Roboto", Font.PLAIN, 32);
             g.setFont(font);
             g.setColor(VERY_DARK_GREEN);
