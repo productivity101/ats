@@ -47,7 +47,7 @@ public class MouseInput implements MouseListener{
             if (my >= 400 && my <= 450)
             {
                 //Pressed Quit Button
-                Game.State = Game.STATE.GAME;
+                Game.State = Game.STATE.QUIT;
             }
         }
     }
@@ -66,4 +66,5 @@ public class MouseInput implements MouseListener{
     public void mouseExited(MouseEvent e) {
 
     }
+
 }

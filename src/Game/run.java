@@ -1,6 +1,8 @@
 package Game;
 
 import javax.swing.*;
+import Game.repeated.*;
+
 import static Game.repeated.BOARD_HEIGHT;
 import static Game.repeated.BOARD_WIDTH;
 
@@ -10,6 +12,9 @@ public class run extends JFrame{
         initUI();
     }
 
+    /*
+     * UI for the game
+     */
     private void initUI() {
         this.add(new Game());
 
@@ -23,6 +28,7 @@ public class run extends JFrame{
     }
 
     public static void main(String[] args) {
+
         new run();
     }
 }

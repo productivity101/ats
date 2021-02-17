@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b4bc4e12-4772-41ad-b113-59b2737915e0" name="Default Changelist" comment="">
+    <list default="true" id="8fccc0da-a40c-4308-8d0e-f61ce2309b7a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game/MouseInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/MouseInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game/run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/run.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1o8ptKAO1Bs6KL2hpLqUxVrnOFi" />
+  <component name="ProjectId" id="1oBTkRdHUwVr3HtbMUBQNCZ0qpW" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -22,44 +34,37 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/ict1009-team46-2021" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.path.for.package.eslint" value="project" />
-    <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager">
-    <configuration name="run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="Run" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Game.run" />
       <module name="ict1009-team46-2021" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Game.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.run" />
-      </list>
-    </recent_temporary>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b4bc4e12-4772-41ad-b113-59b2737915e0" name="Default Changelist" comment="" />
-      <created>1612678284686</created>
+      <changelist id="8fccc0da-a40c-4308-8d0e-f61ce2309b7a" name="Default Changelist" comment="" />
+      <created>1612759129070</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1612678284686</updated>
-      <workItem from="1612680288139" duration="1828000" />
-      <workItem from="1612683177822" duration="122000" />
+      <updated>1612759129070</updated>
+      <workItem from="1612759132864" duration="735000" />
     </task>
     <servers />
   </component>

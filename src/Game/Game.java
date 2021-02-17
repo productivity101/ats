@@ -31,7 +31,7 @@ public class Game extends JPanel {
     private int START_Y=560;
     private int PLAYER_WIDTH=46;
     private int PLAYER_HEIGHT=32;
-
+    private int SCORE = 0;
 
     private boolean inGame;
     private Integer lives, lives2;
@@ -44,8 +44,9 @@ public class Game extends JPanel {
     public static enum STATE{
         MENU,
         GAME,
-        PAUSE
-    };
+        PAUSE,
+        QUIT
+    }
 
     public static STATE State = STATE.MENU;
 
@@ -79,22 +80,23 @@ public class Game extends JPanel {
             super.addNotify();
 
             Thread animator = new Thread(this::run);
+
             animator.start();
-
-
     }
 
 
     public void run() {
 
+
         long beforeTime, timeDiff, sleep;
 
         beforeTime = System.currentTimeMillis();
-        while(level < 4 && !gameOver) {
+        while(level < 6 && !gameOver) {
             while(inGame) {
                 repaint();
-                animationCycle();       //mechanics of a game
-
+                if (State == STATE.GAME) {
+                    animationCycle();       //mechanics of a game
+                }
                 timeDiff = System.currentTimeMillis() - beforeTime;
                 sleep = DELAY - timeDiff;
 
@@ -113,28 +115,29 @@ public class Game extends JPanel {
             player2=new Player(PLAYER_HEIGHT, PLAYER_WIDTH,START_X-180, START_Y,ID.Player2);
             enemyWave = new EnemyWaves(level);
 
-            
+
             inGame = true;
         }
         gameOver();
     }
 
-
+    /*
+     * Setup the GUI for the game
+     */
     @Override
     public void paintComponent(Graphics g) {
+
         if (State == STATE.GAME) {
             super.paintComponent(g);
             g.drawImage(img, 0, 0, null); // background image
-
             Font font = new Font("Roboto", Font.PLAIN, 18);
             g.setColor(Color.white);
             g.setFont(font);
 
             g.drawString("Player 1 Lives: " + lives.toString(), BOARD_WIDTH - 220, 25);
-            g.drawString("Enemies Left: " + enemyWave.getNumberOfEnemies().toString(), 28, 25);
-
             g.drawString("Player 2 Lives: " + lives2.toString(), BOARD_WIDTH - 220, 55);
-
+            g.drawString("Enemies Left: " + enemyWave.getNumberOfEnemies().toString(), 28, 25);
+            g.drawString("Score: " + SCORE, BOARD_WIDTH/2-50, 25);
 
             g.setColor(VERY_DARK_GREEN);
             g.drawLine(0, GROUND, BOARD_WIDTH, GROUND);
@@ -154,8 +157,40 @@ public class Game extends JPanel {
             menu.render(g);
             super.paintComponent(g);
             g.setColor(Color.green); // background image
-        }else if(State == STATE.PAUSE){
+        }else if(State == STATE.PAUSE) {
+            // Need to change the pause menu
+            super.paintComponent(g);
+            g.drawImage(img, 0, 0, null); // background image
 
+            Font font = new Font("Roboto", Font.PLAIN, 18);
+            g.setColor(Color.white);
+            g.setFont(font);
+
+            g.drawString("Player 1 Lives: " + lives.toString(), BOARD_WIDTH - 220, 25);
+            g.drawString("Player 2 Lives: " + lives2.toString(), BOARD_WIDTH - 220, 55);
+            g.drawString("Enemies Left: " + enemyWave.getNumberOfEnemies().toString(), 28, 25);
+            g.drawString("Score: " + SCORE, BOARD_WIDTH / 2 - 50, 25);
+            font = new Font("Roboto", Font.PLAIN, 32);
+            g.setFont(font);
+            g.setColor(VERY_DARK_GREEN);
+            g.drawLine(0, GROUND, BOARD_WIDTH, GROUND);
+
+            player.draw(g, this);
+            if (player.getMissile().getVisibility())
+                player.getMissile().draw(g, this);
+
+            //create
+            player2.draw(g, this);
+            if (player2.getMissile().getVisibility())
+                player2.getMissile().draw(g, this);
+
+            enemyWave.draw(g, this);
+            g.setColor(Color.white);
+            g.drawString("Pause ", BOARD_WIDTH / 2 - 50, 150);
+
+        }
+        else if (State == STATE.QUIT) {
+            System.exit(0);
         }
 
 
@@ -188,6 +223,7 @@ public class Game extends JPanel {
 
         if(enemyWave.reachedTheGround()) {
             inGame=false;
+            gameOver = true;
             message="Game Over!";
         }
 
@@ -207,7 +243,6 @@ public class Game extends JPanel {
         enemyWave.shooting();
         enemyWave.accelerateIfNeeded(level);
         enemyWave.turnAroundIfHitTheWall();
-        gameOver = enemyWave.reachedTheGround();
     }
 
     private void collisionMissileEnemies() {
@@ -215,15 +250,16 @@ public class Game extends JPanel {
             for (Enemy enemy : enemyWave.getEnemies())
                 if(enemy.getVisibility() && player.getMissile().collisionWith(enemy)) {
                     enemy.explosion();
-                    enemyWave.decreaseNumberOfEnemies();
                     player.getMissile().dead();
+                    SCORE++;
                 }
-        }else if(player2.getMissile().getVisibility()) {
+        }
+        if(player2.getMissile().getVisibility()) {
             for (Enemy enemy : enemyWave.getEnemies())
                 if(enemy.getVisibility() && player2.getMissile().collisionWith(enemy)) {
                     enemy.explosion();
-                    enemyWave.decreaseNumberOfEnemies();
                     player2.getMissile().dead();
+                    SCORE++;
                 }
         }
     }
@@ -252,9 +288,10 @@ public class Game extends JPanel {
         g.setColor(Color.WHITE);
         g.setFont(font);
         g.drawString(message, (BOARD_WIDTH-ft.stringWidth(message))/2, BOARD_HEIGHT/2);
+        g.drawString("Final Score: "+SCORE, (BOARD_WIDTH-10)/2-100, BOARD_HEIGHT/2+50);
     }
 
-    private class KAdapter extends KeyAdapter {
+    private class KAdapter extends KeyAdapter  {
 
     	public void keyPressed(KeyEvent e) {
             if (State == STATE.GAME) {
@@ -262,12 +299,21 @@ public class Game extends JPanel {
                 if (key == KeyEvent.VK_A) player.setVelX(-player.getSpeed());
                 if (key == KeyEvent.VK_D) player.setVelX(player.getSpeed());
                 if (key == KeyEvent.VK_W && !player.getMissile().getVisibility()) {
-                    player.shoot();
+                    player.shootMyself();
                 }
                 if (key == KeyEvent.VK_LEFT) player2.setVelX(-player2.getSpeed());
                 if (key == KeyEvent.VK_RIGHT) player2.setVelX(player2.getSpeed());
                 if (key == KeyEvent.VK_UP && !player2.getMissile().getVisibility()) {
-                    player2.shoot();
+                    player2.shootMyself();
+                }
+                if (key == KeyEvent.VK_P) {
+                    State = STATE.PAUSE;
+                }
+            }
+            else if (State == STATE.PAUSE) {
+                int key = e.getKeyCode();
+                if  (key == KeyEvent.VK_P) {
+                    State = STATE.GAME;
                 }
             }
             else if(State == STATE.MENU){

@@ -13,7 +13,6 @@ import static Game.repeated.*;
 public class EnemyWaves {
 
     private List<Enemy> enemies;
-    private Integer numberOfEnemies;
     private int enemySpeed;
 
     private int ENEMY_WIDTH=38;
@@ -27,21 +26,20 @@ public class EnemyWaves {
     }
 
     public Integer getNumberOfEnemies() {
-        return numberOfEnemies;
+    	 int count = 0;
+         for (Enemy e:enemies) {
+        	 if (e.getVisibility()) count++;
+         }
+         return count;
     }
-
-    public void decreaseNumberOfEnemies() {
-        numberOfEnemies--;
-    }
-
+    
     public EnemyWaves(int level) {
         enemies = new ArrayList<>();
-        for(int i=0; i<level*2; i++) {
-            for (int j = 0; j < level*2; j++) {
+        for(int i=0; i<level; i++) {
+            for (int j = 0; j < level*3; j++) {
                 enemies.add(new Enemy(ENEMY_WIDTH, ENEMY_HEIGHT=38, ENEMY_X + 32 * j, ENEMY_Y + 32 * i, ID.Enemy));
             }
         }
-        numberOfEnemies=level*2*level*2;
         enemySpeed=1;
     }
 
@@ -88,19 +86,19 @@ public class EnemyWaves {
 
     public void shooting() {
         for(Enemy enemy: enemies) {
-            enemy.tryToShoot();
+            enemy.shootMyself();
         }
     }
 
     public void accelerateIfNeeded(int level) {
         boolean b=false;
 
-        if(numberOfEnemies==(level*2*level*2)/2) {
+        if(getNumberOfEnemies()==(level*2*level*2)/2) {
             enemySpeed = 2;
             b = true;
         }
 
-        if(numberOfEnemies==(level*2*level*2)/4) {
+        if(getNumberOfEnemies()==(level*2*level*2)/4) {
             enemySpeed = 3;
             b = true;
         }
