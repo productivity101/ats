@@ -45,14 +45,6 @@ public abstract class GameObjectsManager {
         setObjectState(true);
     }
 
-    public void shoot() {
-        missile.setX(x);
-        missile.setY(y);
-        missile.setVisibility(true);
-    }
-
-
-
     public Rectangle getBoundary() {
         return new Rectangle(this.x, this.y, this.width, this.height);
     }
