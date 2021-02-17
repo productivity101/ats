@@ -4,8 +4,9 @@ import static Game.repeated.BOARD_WIDTH;
 
 import Game.GameObjectsManager;
 import Game.ID;
+import Game.Shooterino;
 
-public class Player extends GameObjectsManager {
+public class Player extends GameObjectsManager implements Shooterino {
     private static final int PLAYER_WIDTH =46 ;
     private int PLAYER_SPEED=2;
 
@@ -40,13 +41,11 @@ public class Player extends GameObjectsManager {
             missile.move();
         }
     }
-    @Override
-    public void shoot(){
+    public void shootMyself(){
         missile.setX(x+18);
         missile.setY(y);
         missile.setVisibility(true);
     }
-
     
     @Override
     public void move() {

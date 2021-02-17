@@ -2,10 +2,11 @@ package Sprites;
 
 import Game.GameObjectsManager;
 import Game.ID;
+import Game.Shooterino;
 
 import java.util.Random;
 
-public class Enemy extends GameObjectsManager {
+public class Enemy extends GameObjectsManager implements Shooterino {
     private int ENEMY_WIDTH=38;
     private int ENEMY_HEIGHT=38;
 
@@ -28,8 +29,7 @@ public class Enemy extends GameObjectsManager {
         bomb=new Bullets.Bombs(24,8, 0, 0,id);
         bomb.dead();
     }
-    @Override
-    public void shoot() {
+    public void shootMyself() {
         int random = rand.nextInt()%400;
         if(random==1 && !this.bomb.getVisibility() && this.getVisibility()){
             this.bomb.setX(this.x + (ENEMY_WIDTH / 2));
