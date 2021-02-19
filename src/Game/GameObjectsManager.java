@@ -21,6 +21,8 @@ public abstract class GameObjectsManager {
     private boolean visible;
     private Missiles missile;
 
+    public abstract void move();
+
     //Parameterize Constructor
     public GameObjectsManager(int height, int width, int x, int y, ID id) {
         this.height = height;
@@ -32,9 +34,6 @@ public abstract class GameObjectsManager {
         this.visible = true;
         this.ObjectState = false;
     }
-
-
-
     public void loadImage(String imageName) {
         ImageIcon ii = new ImageIcon(imageName);
         this.image = ii.getImage();
@@ -122,10 +121,4 @@ public abstract class GameObjectsManager {
     public int getWidth(){
         return width;
     }
-
-
-
-
-    public abstract void move();
-
 }

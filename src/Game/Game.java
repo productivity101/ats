@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,8 @@ import static Game.repeated.*;
 public class Game extends JPanel {
     public static final int DELAY = 18;
     Image img = Toolkit.getDefaultToolkit().getImage("background.jpg");
+    Image retry = Toolkit.getDefaultToolkit().getImage("retry_icon.png");
+    Image cross = Toolkit.getDefaultToolkit().getImage("cross_icon.png");
     private Menu menu;
     private Player player;
     private Player player2;
@@ -50,6 +53,9 @@ public class Game extends JPanel {
 
     public static STATE State = STATE.MENU;
 
+    public Integer getLevel(){
+        return this.level;
+    }
 
     Game() {
 
@@ -137,7 +143,8 @@ public class Game extends JPanel {
             g.drawString("Player 1 Lives: " + lives.toString(), BOARD_WIDTH - 220, 25);
             g.drawString("Player 2 Lives: " + lives2.toString(), BOARD_WIDTH - 220, 55);
             g.drawString("Enemies Left: " + enemyWave.getNumberOfEnemies().toString(), 28, 25);
-            g.drawString("Score: " + SCORE, BOARD_WIDTH/2-50, 25);
+            g.drawString("LEVEL: " + level, BOARD_WIDTH/2-50, 25);
+            g.drawString("Score: " + SCORE, BOARD_WIDTH/2-48, 55);
 
             g.setColor(VERY_DARK_GREEN);
             g.drawLine(0, GROUND, BOARD_WIDTH, GROUND);
@@ -169,7 +176,8 @@ public class Game extends JPanel {
             g.drawString("Player 1 Lives: " + lives.toString(), BOARD_WIDTH - 220, 25);
             g.drawString("Player 2 Lives: " + lives2.toString(), BOARD_WIDTH - 220, 55);
             g.drawString("Enemies Left: " + enemyWave.getNumberOfEnemies().toString(), 28, 25);
-            g.drawString("Score: " + SCORE, BOARD_WIDTH / 2 - 50, 25);
+            g.drawString("LEVEL: " + level, BOARD_WIDTH/2-50, 25);
+            g.drawString("Score: " + SCORE, BOARD_WIDTH/2-48, 55);
             font = new Font("Roboto", Font.PLAIN, 32);
             g.setFont(font);
             g.setColor(VERY_DARK_GREEN);
@@ -226,11 +234,19 @@ public class Game extends JPanel {
             gameOver = true;
             message="Game Over!";
         }
+        if (getLevel() == 1){
+            player.move();
+            player.missileMove();
+            player2.move();
+            player2.missileMove();
+        }
+        if (getLevel() > 1){
+            player.move(getLevel());
+            player.missileMove();
+            player2.move(getLevel());
+            player2.missileMove();
+        }
 
-        player.move();
-        player.missileMove();
-        player2.move();
-        player2.missileMove();
         enemyWaveMove();
         collisionMissileEnemies();
         collisionBombPlayer();
@@ -275,20 +291,25 @@ public class Game extends JPanel {
             }
         }
     }
-
-
     private void gameOver() {
+        Shape replayButton = new Rectangle((BOARD_WIDTH-10)/2-100, BOARD_HEIGHT/2+80, 60,60);
+        Shape quitButton = new Rectangle((BOARD_WIDTH-10)/2+80, BOARD_HEIGHT/2+80, 60,60);
         Graphics g = this.getGraphics();
         super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
         g.drawImage(img, 0, 0, null); // background image
 
         Font font = new Font("Roboto", Font.BOLD, 30);
         FontMetrics ft = this.getFontMetrics(font);
-
         g.setColor(Color.WHITE);
         g.setFont(font);
         g.drawString(message, (BOARD_WIDTH-ft.stringWidth(message))/2, BOARD_HEIGHT/2);
         g.drawString("Final Score: "+SCORE, (BOARD_WIDTH-10)/2-100, BOARD_HEIGHT/2+50);
+        g.drawImage(retry, (BOARD_WIDTH-10)/2-100,BOARD_HEIGHT/2+80 , null);
+        g.drawImage(cross, (BOARD_WIDTH-10)/2+70,BOARD_HEIGHT/2+70 , null);
+        g2d.draw(replayButton);
+        g2d.draw(quitButton);
+
     }
 
     private class KAdapter extends KeyAdapter  {
@@ -332,6 +353,8 @@ public class Game extends JPanel {
 
             }
         }
+
+
 
 
 

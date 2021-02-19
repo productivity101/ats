@@ -42,8 +42,6 @@ public class Enemy extends GameObjectsManager implements Shooterino {
         this.almostDied = almostDied;
     }
 
-
-    @Override
     public void move() {
         x += velX;
         y += velY;
