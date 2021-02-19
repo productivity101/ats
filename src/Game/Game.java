@@ -1,104 +1,80 @@
 package Game;
 
-
-
+//Imports
 import Sprites.Enemy;
 import Sprites.EnemyWaves;
 import Sprites.Player;
-
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Ellipse2D;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 
 import static Game.repeated.*;
 
-
+// JPanel Container for the game
 public class Game extends JPanel {
-    public static final int DELAY = 18;
-    Image img = Toolkit.getDefaultToolkit().getImage("background.jpg");
-    Image retry = Toolkit.getDefaultToolkit().getImage("retry_icon.png");
-    Image cross = Toolkit.getDefaultToolkit().getImage("cross_icon.png");
-    private Menu menu;
-    private Player player;
-    private Player player2;
-    private EnemyWaves enemyWave;
-    public static final Color VERY_DARK_GREEN = new Color(0,102,0);
-
-    private int START_X=500;
-    private int START_Y=560;
-    private int PLAYER_WIDTH=46;
-    private int PLAYER_HEIGHT=32;
-    private int SCORE = 0;
-
-    private boolean inGame;
-    private Integer lives, lives2;
-
-    private Integer level;
-    private boolean gameOver;
-
-    private String message;     //message for the end of a game
-
-    public static enum STATE{
-        MENU,
-        GAME,
-        PAUSE,
-        QUIT
-    }
-
-    public static STATE State = STATE.MENU;
-
-    public Integer getLevel(){
-        return this.level;
-    }
+    public static final int DELAY = 18; //Delay the game thead
+    public static final Color VERY_DARK_GREEN = new Color(0, 102, 0); // Green border for the game
+    public static STATE State = STATE.MENU; //Menu state
+    Image img = Toolkit.getDefaultToolkit().getImage("background.jpg"); //Main background of image
+    Image retry = Toolkit.getDefaultToolkit().getImage("retry_icon.png"); //Retry
+    Image cross = Toolkit.getDefaultToolkit().getImage("cross_icon.png"); // Cross
+    private final Menu menu;
+    private Player player; //Player object for player 1
+    private Player player2; //Player object for player 2
+    private EnemyWaves enemyWave; //Enemywave object for enemy
+    private final int START_X = 500; //Starting X axis of Players
+    private final int START_Y = 560; //Starting Y axis of Players
+    private final int PLAYER_WIDTH = 46; //Width of Player
+    private final int PLAYER_HEIGHT = 32; //Height of Player
+    private int SCORE = 0; //Initialized score to zero
+    private boolean inGame; //Track game object status
+    private Integer lives, lives2; //Track player lives
+    private Integer level; //Game Level
+    private boolean gameOver; //Check game status
+    private String message;   //message for the end of a game
 
     Game() {
+        //If game is started initialize these variables
+        inGame = true;
+        lives = 3;
+        lives2 = 3;
+        level = 1;
+        // Initialise the game objects
+        player = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X, START_Y, ID.Player);//Play1 set position
+        player2 = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X - 180, START_Y, ID.Player2); //Play2 set position
+        enemyWave = new EnemyWaves(level); //enemy
+        menu = new Menu();
 
-            inGame = true;
-            lives = 3;
-            lives2 = 3;
 
-            level = 1;
+        addKeyListener(new KAdapter());     //for Key events
+        addMouseListener(new MouseInput()); // for Mouse event
+        setFocusable(true);
+        setBackground(new Color(168, 219, 127, 116)); //Set the color of background at start up menu
 
-            player = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X, START_Y, ID.Player);
-            player2 = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X - 180, START_Y, ID.Player2);
-            enemyWave = new EnemyWaves(level);
-            menu = new Menu();
-
-
-            addKeyListener(new KAdapter());     //for Key events
-            addMouseListener(new MouseInput()); // for Mouse event
-            setFocusable(true);
-            setBackground(new Color(168, 219, 127, 116));
-        
 
     }
 
-
+    // Get level
+    public Integer getLevel() {
+        return this.level;
+    }
+    // Start the thread
     @Override
     public void addNotify() {
-
-            super.addNotify();
-
-            Thread animator = new Thread(this::run);
-
-            animator.start();
+        super.addNotify();
+        Thread animator = new Thread(this::run);
+        animator.start();
     }
 
-
     public void run() {
-
-
+        // Game Rendering
         long beforeTime, timeDiff, sleep;
 
         beforeTime = System.currentTimeMillis();
-        while(level < 6 && !gameOver) {
-            while(inGame) {
+        while (level < 6 && !gameOver) {
+            while (inGame) {
                 repaint();
                 if (State == STATE.GAME) {
                     animationCycle();       //mechanics of a game
@@ -106,7 +82,7 @@ public class Game extends JPanel {
                 timeDiff = System.currentTimeMillis() - beforeTime;
                 sleep = DELAY - timeDiff;
 
-                if(sleep<0) {
+                if (sleep < 0) {
                     sleep = 2;
                 }
                 try {
@@ -114,14 +90,12 @@ public class Game extends JPanel {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                beforeTime=System.currentTimeMillis();
+                beforeTime = System.currentTimeMillis();
             }
             gameOver();
-            player=new Player(PLAYER_HEIGHT, PLAYER_WIDTH,START_X, START_Y,ID.Player);
-            player2=new Player(PLAYER_HEIGHT, PLAYER_WIDTH,START_X-180, START_Y,ID.Player2);
+            player = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X, START_Y, ID.Player);
+            player2 = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X - 180, START_Y, ID.Player2);
             enemyWave = new EnemyWaves(level);
-
-
             inGame = true;
         }
         gameOver();
@@ -143,8 +117,8 @@ public class Game extends JPanel {
             g.drawString("Player 1 Lives: " + lives.toString(), BOARD_WIDTH - 220, 25);
             g.drawString("Player 2 Lives: " + lives2.toString(), BOARD_WIDTH - 220, 55);
             g.drawString("Enemies Left: " + enemyWave.getNumberOfEnemies().toString(), 28, 25);
-            g.drawString("LEVEL: " + level, BOARD_WIDTH/2-50, 25);
-            g.drawString("Score: " + SCORE, BOARD_WIDTH/2-48, 55);
+            g.drawString("LEVEL: " + level, BOARD_WIDTH / 2 - 50, 25);
+            g.drawString("Score: " + SCORE, BOARD_WIDTH / 2 - 48, 55);
 
             g.setColor(VERY_DARK_GREEN);
             g.drawLine(0, GROUND, BOARD_WIDTH, GROUND);
@@ -160,11 +134,11 @@ public class Game extends JPanel {
 
             enemyWave.draw(g, this);
 
-        }else if(State == STATE.MENU){
+        } else if (State == STATE.MENU) {
             menu.render(g);
             super.paintComponent(g);
             g.setColor(Color.green); // background image
-        }else if(State == STATE.PAUSE) {
+        } else if (State == STATE.PAUSE) {
             // Need to change the pause menu
             super.paintComponent(g);
             g.drawImage(img, 0, 0, null); // background image
@@ -176,8 +150,8 @@ public class Game extends JPanel {
             g.drawString("Player 1 Lives: " + lives.toString(), BOARD_WIDTH - 220, 25);
             g.drawString("Player 2 Lives: " + lives2.toString(), BOARD_WIDTH - 220, 55);
             g.drawString("Enemies Left: " + enemyWave.getNumberOfEnemies().toString(), 28, 25);
-            g.drawString("LEVEL: " + level, BOARD_WIDTH/2-50, 25);
-            g.drawString("Score: " + SCORE, BOARD_WIDTH/2-48, 55);
+            g.drawString("LEVEL: " + level, BOARD_WIDTH / 2 - 50, 25);
+            g.drawString("Score: " + SCORE, BOARD_WIDTH / 2 - 48, 55);
             font = new Font("Roboto", Font.PLAIN, 32);
             g.setFont(font);
             g.setColor(VERY_DARK_GREEN);
@@ -196,8 +170,7 @@ public class Game extends JPanel {
             g.setColor(Color.white);
             g.drawString("Pause ", BOARD_WIDTH / 2 - 50, 150);
 
-        }
-        else if (State == STATE.QUIT) {
+        } else if (State == STATE.QUIT) {
             System.exit(0);
         }
 
@@ -205,42 +178,42 @@ public class Game extends JPanel {
     }
 
     private void animationCycle() {
-        if(enemyWave.getNumberOfEnemies()<=0) {
-            inGame=false;
+        if (enemyWave.getNumberOfEnemies() <= 0) {
+            inGame = false;
             level += 1;
             message = "Congratulations. You Won!";
         }
 
-        if(player.getObjectState()) {
+        if (player.getObjectState()) {
             lives--;
-            if(lives!=0) player.revive();
+            if (lives != 0) player.revive();
             else {
-                inGame=false;
+                inGame = false;
                 gameOver = true;
                 message = "Game Over!";
             }
-        }else if (player2.getObjectState()){
+        } else if (player2.getObjectState()) {
             lives2--;
-            if(lives2!=0) player2.revive();
+            if (lives2 != 0) player2.revive();
             else {
-                inGame=false;
+                inGame = false;
                 gameOver = true;
                 message = "Game Over!";
             }
         }
 
-        if(enemyWave.reachedTheGround()) {
-            inGame=false;
+        if (enemyWave.reachedTheGround()) {
+            inGame = false;
             gameOver = true;
-            message="Game Over!";
+            message = "Game Over!";
         }
-        if (getLevel() == 1){
+        if (getLevel() == 1) {
             player.move();
             player.missileMove();
             player2.move();
             player2.missileMove();
         }
-        if (getLevel() > 1){
+        if (getLevel() > 1) {
             player.move(getLevel());
             player.missileMove();
             player2.move(getLevel());
@@ -252,7 +225,6 @@ public class Game extends JPanel {
         collisionBombPlayer();
     }
 
-
     private void enemyWaveMove() {
         enemyWave.fixStatus();
         enemyWave.bombMove();
@@ -262,17 +234,17 @@ public class Game extends JPanel {
     }
 
     private void collisionMissileEnemies() {
-        if(player.getMissile().getVisibility()) {
+        if (player.getMissile().getVisibility()) {
             for (Enemy enemy : enemyWave.getEnemies())
-                if(enemy.getVisibility() && player.getMissile().collisionWith(enemy)) {
+                if (enemy.getVisibility() && player.getMissile().collisionWith(enemy)) {
                     enemy.explosion();
                     player.getMissile().dead();
                     SCORE++;
                 }
         }
-        if(player2.getMissile().getVisibility()) {
+        if (player2.getMissile().getVisibility()) {
             for (Enemy enemy : enemyWave.getEnemies())
-                if(enemy.getVisibility() && player2.getMissile().collisionWith(enemy)) {
+                if (enemy.getVisibility() && player2.getMissile().collisionWith(enemy)) {
                     enemy.explosion();
                     player2.getMissile().dead();
                     SCORE++;
@@ -281,19 +253,20 @@ public class Game extends JPanel {
     }
 
     private void collisionBombPlayer() {
-        for(Enemy enemy : enemyWave.getEnemies()) {
+        for (Enemy enemy : enemyWave.getEnemies()) {
             if (enemy.getBomb().getVisibility() && enemy.getBomb().collisionWith(player)) {
                 player.explosion();
                 enemy.getBomb().dead();
-            }else if (enemy.getBomb().getVisibility()&& enemy.getBomb().collisionWith(player2)) {
+            } else if (enemy.getBomb().getVisibility() && enemy.getBomb().collisionWith(player2)) {
                 player2.explosion();
                 enemy.getBomb().dead();
             }
         }
     }
+
     private void gameOver() {
-        Shape replayButton = new Rectangle((BOARD_WIDTH-10)/2-100, BOARD_HEIGHT/2+80, 60,60);
-        Shape quitButton = new Rectangle((BOARD_WIDTH-10)/2+80, BOARD_HEIGHT/2+80, 60,60);
+        Shape replayButton = new Rectangle((BOARD_WIDTH - 10) / 2 - 100, BOARD_HEIGHT / 2 + 80, 60, 60);
+        Shape quitButton = new Rectangle((BOARD_WIDTH - 10) / 2 + 80, BOARD_HEIGHT / 2 + 80, 60, 60);
         Graphics g = this.getGraphics();
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -303,18 +276,25 @@ public class Game extends JPanel {
         FontMetrics ft = this.getFontMetrics(font);
         g.setColor(Color.WHITE);
         g.setFont(font);
-        g.drawString(message, (BOARD_WIDTH-ft.stringWidth(message))/2, BOARD_HEIGHT/2);
-        g.drawString("Final Score: "+SCORE, (BOARD_WIDTH-10)/2-100, BOARD_HEIGHT/2+50);
-        g.drawImage(retry, (BOARD_WIDTH-10)/2-100,BOARD_HEIGHT/2+80 , null);
-        g.drawImage(cross, (BOARD_WIDTH-10)/2+70,BOARD_HEIGHT/2+70 , null);
+        g.drawString(message, (BOARD_WIDTH - ft.stringWidth(message)) / 2, BOARD_HEIGHT / 2);
+        g.drawString("Final Score: " + SCORE, (BOARD_WIDTH - 10) / 2 - 100, BOARD_HEIGHT / 2 + 50);
+        g.drawImage(retry, (BOARD_WIDTH - 10) / 2 - 100, BOARD_HEIGHT / 2 + 80, null);
+        g.drawImage(cross, (BOARD_WIDTH - 10) / 2 + 70, BOARD_HEIGHT / 2 + 70, null);
         g2d.draw(replayButton);
         g2d.draw(quitButton);
 
     }
 
-    private class KAdapter extends KeyAdapter  {
+    public enum STATE {
+        MENU,
+        GAME,
+        PAUSE,
+        QUIT
+    }
 
-    	public void keyPressed(KeyEvent e) {
+    private class KAdapter extends KeyAdapter {
+
+        public void keyPressed(KeyEvent e) {
             if (State == STATE.GAME) {
                 int key = e.getKeyCode();
                 if (key == KeyEvent.VK_A) player.setVelX(-player.getSpeed());
@@ -330,36 +310,30 @@ public class Game extends JPanel {
                 if (key == KeyEvent.VK_P) {
                     State = STATE.PAUSE;
                 }
-            }
-            else if (State == STATE.PAUSE) {
+            } else if (State == STATE.PAUSE) {
                 int key = e.getKeyCode();
-                if  (key == KeyEvent.VK_P) {
+                if (key == KeyEvent.VK_P) {
                     State = STATE.GAME;
                 }
-            }
-            else if(State == STATE.MENU){
+            } else if (State == STATE.MENU) {
 
             }
         }
 
-    	public void keyReleased(KeyEvent e) {
+        public void keyReleased(KeyEvent e) {
             if (State == STATE.GAME) {
                 int key = e.getKeyCode();
                 if (key == KeyEvent.VK_A) player.setVelX(0);
                 if (key == KeyEvent.VK_D) player.setVelX(0);
                 if (key == KeyEvent.VK_LEFT) player2.setVelX(0);
                 if (key == KeyEvent.VK_RIGHT) player2.setVelX(0);
-            }else if(State == STATE.MENU){
+            } else if (State == STATE.MENU) {
 
             }
         }
 
 
-
-
-
     }
-
 
 
 }

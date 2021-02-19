@@ -2,7 +2,7 @@ package Game;
 
 import java.awt.*;
 
-import static Game.repeated.*;
+import static Game.repeated.BOARD_WIDTH;
 
 public class Menu {
 
@@ -10,13 +10,13 @@ public class Menu {
     public Rectangle helpButton = new Rectangle(Game.WIDTH / 2 + 300, 300, 200, 50);
     public Rectangle quitButton = new Rectangle(Game.WIDTH / 2 + 300, 400, 200, 50);
 
-    public void render(Graphics graphics){
+    public void render(Graphics graphics) {
         Graphics2D g2d = (Graphics2D) graphics;
 
         Font font = new Font("arial", Font.BOLD, 50);
         graphics.setFont(font);
         graphics.setColor(Color.white);
-        graphics.drawString("MONKEY ATTACK", BOARD_WIDTH/2 -225,100);
+        graphics.drawString("MONKEY INVADERS", BOARD_WIDTH / 2 - 225, 100);
 
 
         Font fnt1 = new Font("arial", Font.BOLD, 30);
