@@ -63,7 +63,7 @@ public class Game extends JPanel {
             lives = 3;
             lives2 = 3;
 
-            level = 2;
+            level = 1;
 
             player = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X, START_Y, ID.Player);
             player2 = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X - 180, START_Y, ID.Player2);
@@ -309,7 +309,7 @@ public class Game extends JPanel {
         g.drawImage(cross, (BOARD_WIDTH-10)/2+70,BOARD_HEIGHT/2+70 , null);
         g2d.draw(replayButton);
         g2d.draw(quitButton);
-        
+
     }
 
     private class KAdapter extends KeyAdapter  {
