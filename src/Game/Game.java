@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,8 @@ import static Game.repeated.*;
 public class Game extends JPanel {
     public static final int DELAY = 18;
     Image img = Toolkit.getDefaultToolkit().getImage("background.jpg");
+    Image retry = Toolkit.getDefaultToolkit().getImage("retry_icon.png");
+    Image cross = Toolkit.getDefaultToolkit().getImage("cross_icon.png");
     private Menu menu;
     private Player player;
     private Player player2;
@@ -288,20 +291,25 @@ public class Game extends JPanel {
             }
         }
     }
-
-
     private void gameOver() {
+        Shape replayButton = new Rectangle((BOARD_WIDTH-10)/2-100, BOARD_HEIGHT/2+80, 60,60);
+        Shape quitButton = new Rectangle((BOARD_WIDTH-10)/2+80, BOARD_HEIGHT/2+80, 60,60);
         Graphics g = this.getGraphics();
         super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
         g.drawImage(img, 0, 0, null); // background image
 
         Font font = new Font("Roboto", Font.BOLD, 30);
         FontMetrics ft = this.getFontMetrics(font);
-
         g.setColor(Color.WHITE);
         g.setFont(font);
         g.drawString(message, (BOARD_WIDTH-ft.stringWidth(message))/2, BOARD_HEIGHT/2);
         g.drawString("Final Score: "+SCORE, (BOARD_WIDTH-10)/2-100, BOARD_HEIGHT/2+50);
+        g.drawImage(retry, (BOARD_WIDTH-10)/2-100,BOARD_HEIGHT/2+80 , null);
+        g.drawImage(cross, (BOARD_WIDTH-10)/2+70,BOARD_HEIGHT/2+70 , null);
+        g2d.draw(replayButton);
+        g2d.draw(quitButton);
+
     }
 
     private class KAdapter extends KeyAdapter  {
