@@ -15,11 +15,14 @@ public class Enemy extends GameObjectsManager implements Shooterino {
 
     //Constructor
     public Enemy(int height, int width, int x, int y, ID id) {
+    	//Call parent constructor
         super(height, width, x, y, id);
+        //Load image and set other attributes
         rand = new Random();
         loadImage("enemy.png");
         velX = 1;
         almostDied = false;
+        //Instantiate bomb for enemy
         bomb = new Bullets.Bombs(24, 8, 0, 0, id);
         bomb.dead();
     }
