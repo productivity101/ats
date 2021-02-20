@@ -17,7 +17,12 @@ public class Game extends JPanel {
     public static final int DELAY = 18; //Delay the game thead
     public static final Color VERY_DARK_GREEN = new Color(0, 102, 0); // Green border for the game
     public static STATE State = STATE.MENU; //Menu state
-    Image img = Toolkit.getDefaultToolkit().getImage("background.jpg"); //Main background of image
+    Image img = Toolkit.getDefaultToolkit().getImage("background.jpg"); //Main background of game level1
+    Image img2 = Toolkit.getDefaultToolkit().getImage("level2.jpg"); //Main background of  game level2
+    Image img3 = Toolkit.getDefaultToolkit().getImage("level3.jpg"); //Main background of  game level3
+    Image img4 = Toolkit.getDefaultToolkit().getImage("level4.jpg"); //Main background of  game level4
+    Image img5 = Toolkit.getDefaultToolkit().getImage("level5.jpg"); //Main background of  game level5
+    Image img6 = Toolkit.getDefaultToolkit().getImage("level6.jpg"); //Main background of  game level6
     Image retry = Toolkit.getDefaultToolkit().getImage("retry_icon.png"); //Retry
     Image cross = Toolkit.getDefaultToolkit().getImage("cross_icon.png"); // Cross
     private final Menu menu;
@@ -74,7 +79,7 @@ public class Game extends JPanel {
 
         beforeTime = System.currentTimeMillis();
         //Loop while under level 6 and not game over yet
-        while (level < 6 && !gameOver) {
+        while (level < 7 && !gameOver) {
         	//Loop for each level
             while (inGame) {
                 repaint();
@@ -114,13 +119,19 @@ public class Game extends JPanel {
 
         if (State == STATE.GAME) {
             super.paintComponent(g);
-            g.drawImage(img, 0, 0, null); // background image
+            if (getLevel() ==1) g.drawImage(img, 0, 0, null); // background image
+            if (getLevel()==2 ) g.drawImage(img2, 0, 0, null); // background image
+            if (getLevel()==3 ) g.drawImage(img3, 0, 0, null); // background image
+            if (getLevel()==4 ) g.drawImage(img4, 0, 0, null); // background image
+            if (getLevel()==5 ) g.drawImage(img5, 0, 0, null); // background image
+            if (getLevel()==6 ) g.drawImage(img6, 0, 0, null); // background image
             Font font = new Font("Roboto", Font.PLAIN, 18);
             g.setColor(Color.white);
-            g.setFont(font);
-
+            g.setFont(font); //set font
+            //set starting position of player
             g.drawString("Player 1 Lives: " + lives.toString(), BOARD_WIDTH - 220, 25);
             g.drawString("Player 2 Lives: " + lives2.toString(), BOARD_WIDTH - 220, 55);
+            //Live score board
             g.drawString("Enemies Left: " + enemyWave.getNumberOfEnemies().toString(), 28, 25);
             g.drawString("LEVEL: " + level, BOARD_WIDTH / 2 - 50, 25);
             g.drawString("Score: " + SCORE, BOARD_WIDTH / 2 - 48, 55);
@@ -206,6 +217,7 @@ public class Game extends JPanel {
                 message = "Game Over!";
             }
         } else if (player2.getObjectState()) {
+            //Decrement lives for player2
             lives2--;
             if (lives2 != 0) player2.revive();
             else {
@@ -303,8 +315,13 @@ public class Game extends JPanel {
         Graphics g = this.getGraphics();
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        g.drawImage(img, 0, 0, null); // background image
-
+        //Background image for different level
+        if (getLevel() ==1) g.drawImage(img, 0, 0, null); // background image
+        if (getLevel()==2 ) g.drawImage(img2, 0, 0, null); // background image
+        if (getLevel()==3 ) g.drawImage(img3, 0, 0, null); // background image
+        if (getLevel()==4 ) g.drawImage(img4, 0, 0, null); // background image
+        if (getLevel()==5 ) g.drawImage(img5, 0, 0, null); // background image
+        if (getLevel()==6 ) g.drawImage(img6, 0, 0, null); // background image
         Font font = new Font("Roboto", Font.BOLD, 30);
         FontMetrics ft = this.getFontMetrics(font);
         g.setColor(Color.WHITE);

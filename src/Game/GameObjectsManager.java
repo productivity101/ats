@@ -1,7 +1,5 @@
 package Game;
 
-import Sprites.Bullets.Missiles;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -40,7 +38,7 @@ public abstract class GameObjectsManager {
         ImageIcon ii = new ImageIcon(imageName);
         this.image = ii.getImage();
     }
-    
+
     //Function to display explosion when collided with bullet
     public void explosion() {
         loadImage("explosion.png");
@@ -87,7 +85,7 @@ public abstract class GameObjectsManager {
     }
 
     //Getters and setters for x and y coordinates
-    
+
     public int getX() {
         return x;
     }
@@ -104,7 +102,7 @@ public abstract class GameObjectsManager {
         this.y = y;
     }
 
-    
+
     //Getters and setters for ID, and speed in x and y coordinates
     public ID getId() {
         return id;
@@ -130,7 +128,7 @@ public abstract class GameObjectsManager {
         this.velY = velY;
     }
 
-    
+
     //Getters and setters for height and width
     public int getHeight() {
         return height;
