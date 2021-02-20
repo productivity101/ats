@@ -73,9 +73,12 @@ public class Game extends JPanel {
         long beforeTime, timeDiff, sleep;
 
         beforeTime = System.currentTimeMillis();
+        //Loop while under level 6 and not game over yet
         while (level < 6 && !gameOver) {
+        	//Loop for each level
             while (inGame) {
                 repaint();
+                //If in GAME state, run animation cycle
                 if (State == STATE.GAME) {
                     animationCycle();       //mechanics of a game
                 }
@@ -93,6 +96,7 @@ public class Game extends JPanel {
                 beforeTime = System.currentTimeMillis();
             }
             gameOver();
+            //Setup for next level
             player = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X, START_Y, ID.Player);
             player2 = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X - 180, START_Y, ID.Player2);
             enemyWave = new EnemyWaves(level);
@@ -147,6 +151,7 @@ public class Game extends JPanel {
             g.setColor(Color.white);
             g.setFont(font);
 
+            //To display player lives, number of enemies remaining, level, and score
             g.drawString("Player 1 Lives: " + lives.toString(), BOARD_WIDTH - 220, 25);
             g.drawString("Player 2 Lives: " + lives2.toString(), BOARD_WIDTH - 220, 55);
             g.drawString("Enemies Left: " + enemyWave.getNumberOfEnemies().toString(), 28, 25);
@@ -177,17 +182,24 @@ public class Game extends JPanel {
 
     }
 
+    //Function for game mechanics
     private void animationCycle() {
+    	//If no enemies left
         if (enemyWave.getNumberOfEnemies() <= 0) {
+        	//Set level to be over and increment level
             inGame = false;
             level += 1;
             message = "Congratulations. You Won!";
         }
 
+        //If player was shot by enemy bomb
         if (player.getObjectState()) {
+        	//Decrement lives
             lives--;
+            //Revive if there are lives remaining
             if (lives != 0) player.revive();
             else {
+            	//Set gameOver if no lives remaining
                 inGame = false;
                 gameOver = true;
                 message = "Game Over!";
@@ -202,17 +214,20 @@ public class Game extends JPanel {
             }
         }
 
+        //Set gameOver if enemy reaches the ground
         if (enemyWave.reachedTheGround()) {
             inGame = false;
             gameOver = true;
             message = "Game Over!";
         }
+        //Movement for level 1
         if (getLevel() == 1) {
             player.move();
             player.missileMove();
             player2.move();
             player2.missileMove();
         }
+        //Movement for levels after 1, player has increased speed at certain stages
         if (getLevel() > 1) {
             player.move(getLevel());
             player.missileMove();
@@ -220,11 +235,13 @@ public class Game extends JPanel {
             player2.missileMove();
         }
 
+        //Update enemy and check for collisions
         enemyWaveMove();
         collisionMissileEnemies();
         collisionBombPlayer();
     }
 
+    //Mechanics for enemy, moving, shooting, when they hit the wall etc.
     private void enemyWaveMove() {
         enemyWave.fixStatus();
         enemyWave.bombMove();
@@ -233,18 +250,27 @@ public class Game extends JPanel {
         enemyWave.turnAroundIfHitTheWall();
     }
 
+    //Function to check if player missiles collide with enemy
     private void collisionMissileEnemies() {
+    	//If player shot a missile
         if (player.getMissile().getVisibility()) {
+        	//Check if collision for each enemy in enemyWave
             for (Enemy enemy : enemyWave.getEnemies())
+            	//If missile hit enemy
                 if (enemy.getVisibility() && player.getMissile().collisionWith(enemy)) {
+                	//Make enemy explode, set missile visible to false, increment score
                     enemy.explosion();
                     player.getMissile().dead();
                     SCORE++;
                 }
         }
+        //If player2 shot a missile
         if (player2.getMissile().getVisibility()) {
+        	//Check if collision for each enemy in enemyWave
             for (Enemy enemy : enemyWave.getEnemies())
+            	//If missile hit enemy
                 if (enemy.getVisibility() && player2.getMissile().collisionWith(enemy)) {
+                	//Make enemy explode, set missile visible to false, increment score
                     enemy.explosion();
                     player2.getMissile().dead();
                     SCORE++;
@@ -252,18 +278,24 @@ public class Game extends JPanel {
         }
     }
 
+    //Function to check if enemy bomb collide with player
     private void collisionBombPlayer() {
+    	//Loop for each enemy in enemyWave
         for (Enemy enemy : enemyWave.getEnemies()) {
+        	//If bomb hits player
             if (enemy.getBomb().getVisibility() && enemy.getBomb().collisionWith(player)) {
+            	//Make player explode, set bomb visible to false
                 player.explosion();
                 enemy.getBomb().dead();
             } else if (enemy.getBomb().getVisibility() && enemy.getBomb().collisionWith(player2)) {
+            	//Make player2 explode, set bomb visible to false
                 player2.explosion();
                 enemy.getBomb().dead();
             }
         }
     }
 
+    //Function for displaying game over screen, shows final score
     private void gameOver() {
         Shape replayButton = new Rectangle((BOARD_WIDTH - 10) / 2 - 100, BOARD_HEIGHT / 2 + 80, 60, 60);
         Shape quitButton = new Rectangle((BOARD_WIDTH - 10) / 2 + 80, BOARD_HEIGHT / 2 + 80, 60, 60);
@@ -285,6 +317,7 @@ public class Game extends JPanel {
 
     }
 
+    //enum for different states of the game
     public enum STATE {
         MENU,
         GAME,
@@ -292,43 +325,55 @@ public class Game extends JPanel {
         QUIT
     }
 
+    //To listen for keyboard input
     private class KAdapter extends KeyAdapter {
 
         public void keyPressed(KeyEvent e) {
+        	//If game is currently active
             if (State == STATE.GAME) {
+            	//Check for keys entered to move players or shoot missiles
                 int key = e.getKeyCode();
                 if (key == KeyEvent.VK_A) player.setVelX(-player.getSpeed());
                 if (key == KeyEvent.VK_D) player.setVelX(player.getSpeed());
                 if (key == KeyEvent.VK_W && !player.getMissile().getVisibility()) {
                     player.shootMyself();
                 }
+                
+                //For player2
                 if (key == KeyEvent.VK_LEFT) player2.setVelX(-player2.getSpeed());
                 if (key == KeyEvent.VK_RIGHT) player2.setVelX(player2.getSpeed());
                 if (key == KeyEvent.VK_UP && !player2.getMissile().getVisibility()) {
                     player2.shootMyself();
                 }
+                
+                //If "P" key pressed, pause the game
                 if (key == KeyEvent.VK_P) {
                     State = STATE.PAUSE;
                 }
+            //If game is paused
             } else if (State == STATE.PAUSE) {
                 int key = e.getKeyCode();
+                //Resume game if "P" key is pressed again
                 if (key == KeyEvent.VK_P) {
                     State = STATE.GAME;
                 }
             } else if (State == STATE.MENU) {
-
+            	//Do nothing in menu
             }
         }
 
+        //Check for when a key is released
         public void keyReleased(KeyEvent e) {
+        	//If game is active
             if (State == STATE.GAME) {
                 int key = e.getKeyCode();
+                //Stop players from moving in a certain direction if key released
                 if (key == KeyEvent.VK_A) player.setVelX(0);
                 if (key == KeyEvent.VK_D) player.setVelX(0);
                 if (key == KeyEvent.VK_LEFT) player2.setVelX(0);
                 if (key == KeyEvent.VK_RIGHT) player2.setVelX(0);
             } else if (State == STATE.MENU) {
-
+            	//Do nothing in menu
             }
         }
 
