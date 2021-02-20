@@ -1,15 +1,19 @@
 package Game;
 
 import javax.swing.*;
-import Game.repeated.*;
 
 import static Game.repeated.BOARD_HEIGHT;
 import static Game.repeated.BOARD_WIDTH;
 
-public class run extends JFrame{
+public class run extends JFrame {
 
     public run() {
         initUI();
+    }
+
+    public static void main(String[] args) {
+
+        new run();
     }
 
     /*
@@ -25,10 +29,5 @@ public class run extends JFrame{
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-    }
-
-    public static void main(String[] args) {
-
-        new run();
     }
 }

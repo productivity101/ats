@@ -4,6 +4,7 @@
     <list default="true" id="8fccc0da-a40c-4308-8d0e-f61ce2309b7a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game/GameObjectsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/GameObjectsManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +33,12 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
   <component name="RunManager">
     <configuration name="Run" type="Application" factoryName="Application">
@@ -53,6 +60,9 @@
       <workItem from="1612759132864" duration="735000" />
       <workItem from="1613570209945" duration="13405000" />
       <workItem from="1613701017704" duration="878000" />
+      <workItem from="1613725003188" duration="9647000" />
+      <workItem from="1613830586015" duration="4514000" />
+      <workItem from="1613835406504" duration="437000" />
     </task>
     <servers />
   </component>
