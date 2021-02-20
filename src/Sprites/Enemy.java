@@ -24,11 +24,14 @@ public class Enemy extends GameObjectsManager implements Shooterino {
         bomb.dead();
     }
 
+    //Getter for enemy bomb
     public Bullets.Bombs getBomb() {
         return bomb;
     }
 
+    //Function for enemy to shoot bombs
     public void shootMyself() {
+    	//Set random probability for enemy to shoot bomb
         int random = rand.nextInt() % 400;
         if (random == 1 && !this.bomb.getVisibility() && this.getVisibility()) {
             this.bomb.setX(this.x + (ENEMY_WIDTH / 2));
@@ -37,10 +40,12 @@ public class Enemy extends GameObjectsManager implements Shooterino {
         }
     }
 
+    //Set enemy to almost dead
     public void setAlmostDied(boolean almostDied) {
         this.almostDied = almostDied;
     }
 
+    //Move enemy
     public void move() {
         x += velX;
         y += velY;
