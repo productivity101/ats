@@ -95,6 +95,7 @@ public class Game extends JPanel {
                 }
                 beforeTime = System.currentTimeMillis();
             }
+            //Game
             gameOver();
             //Setup for next level
             player = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X, START_Y, ID.Player);
