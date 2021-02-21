@@ -21,7 +21,7 @@ public class MouseInputForGameOver implements MouseListener {
         if (mx >= Game.WIDTH / 2 + 300 && mx <= Game.WIDTH / 2 + 500) {
             if (my >= 200 && my <= 250) {
                 //Pressed Play Button
-                Game.State = Game.STATE.GAME;
+                Game.State = Game.STATE.QUIT;
             }
         }
 

@@ -38,12 +38,13 @@ public class MouseInput implements MouseListener {
         }
 
         // Quit Button in Menu
-        if (mx >= Game.WIDTH / 2 + 300 && mx <= Game.WIDTH / 2 + 500) {
+        if (mx >= Game.WIDTH / 2 + 300 && mx <= Game.WIDTH / 2 + 500 && Game.State == Game.STATE.MENU) {
             if (my >= 400 && my <= 450) {
                 //Pressed Quit Button
                 Game.State = Game.STATE.QUIT;
             }
         }
+
     }
 
     @Override

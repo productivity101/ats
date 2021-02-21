@@ -7,6 +7,8 @@ import Sprites.Player;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -39,13 +41,14 @@ public class Game extends JPanel {
     private Integer level; //Game Level
     private boolean gameOver; //Check game status
     private String message;   //message for the end of a game
+    protected JButton enter; // Jbutton
 
     Game() {
         //If game is started initialize these variables
         inGame = true;
         lives = 3;
         lives2 = 3;
-        level = 1;
+        level = 2;
         // Initialise the game objects
         player = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X, START_Y, ID.Player);//Play1 set position
         player2 = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X - 180, START_Y, ID.Player2); //Play2 set position
@@ -309,7 +312,8 @@ public class Game extends JPanel {
     }
 
     //Function for displaying game over screen, shows final score
-    private void gameOver() {
+    private void gameOver (){
+        addMouseListener(new MouseInput()); // for Mouse event
         Shape replayButton = new Rectangle((BOARD_WIDTH - 10) / 2 - 100, BOARD_HEIGHT / 2 + 80, 60, 60);
         Shape quitButton = new Rectangle((BOARD_WIDTH - 10) / 2 + 80, BOARD_HEIGHT / 2 + 80, 60, 60);
         Graphics g = this.getGraphics();
@@ -324,6 +328,17 @@ public class Game extends JPanel {
         if (getLevel()==6 ) g.drawImage(img6, 0, 0, null); // background image
         Font font = new Font("Roboto", Font.BOLD, 30);
         FontMetrics ft = this.getFontMetrics(font);
+        enter = new JButton("Quit");
+        enter.setBounds(145, 283, 135, 25);
+        add(enter);
+        enter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+
         g.setColor(Color.WHITE);
         g.setFont(font);
         g.drawString(message, (BOARD_WIDTH - ft.stringWidth(message)) / 2, BOARD_HEIGHT / 2);
@@ -333,9 +348,16 @@ public class Game extends JPanel {
         g2d.draw(replayButton);
         g2d.draw(quitButton);
 
+
     }
 
-    //enum for different states of the game
+//    public void giveactionListener(ActionListener a) {
+//        enter.addActionListener(a);
+//    }
+
+
+
+//enum for different states of the game
     public enum STATE {
         MENU,
         GAME,
