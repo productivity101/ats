@@ -41,7 +41,8 @@ public class Game extends JPanel {
     private Integer level; //Game Level
     private boolean gameOver; //Check game status
     private String message;   //message for the end of a game
-    protected JButton enter; // Jbutton
+    protected JButton enter; 
+    protected JButton resetButton;
 
     Game() {
         //If game is started initialize these variables
@@ -313,12 +314,14 @@ public class Game extends JPanel {
 
     //Function for displaying game over screen, shows final score
     private void gameOver (){
+    	
         addMouseListener(new MouseInput()); // for Mouse event
         Shape replayButton = new Rectangle((BOARD_WIDTH - 10) / 2 - 100, BOARD_HEIGHT / 2 + 80, 60, 60);
         Shape quitButton = new Rectangle((BOARD_WIDTH - 10) / 2 + 80, BOARD_HEIGHT / 2 + 80, 60, 60);
         Graphics g = this.getGraphics();
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+        
         //Background image for different level
         if (getLevel() ==1) g.drawImage(img, 0, 0, null); // background image
         if (getLevel()==2 ) g.drawImage(img2, 0, 0, null); // background image
@@ -328,8 +331,11 @@ public class Game extends JPanel {
         if (getLevel()==6 ) g.drawImage(img6, 0, 0, null); // background image
         Font font = new Font("Roboto", Font.BOLD, 30);
         FontMetrics ft = this.getFontMetrics(font);
-        enter = new JButton("Quit");
-        enter.setBounds(145, 283, 135, 25);
+        
+        enter = new JButton();
+        enter.setText("Quit");
+        enter.setSize(80, 65);
+        enter.setLocation(470, 395);
         add(enter);
         enter.addActionListener(new ActionListener() {
             @Override
@@ -337,8 +343,22 @@ public class Game extends JPanel {
                 System.exit(0);
             }
         });
-
-
+        
+        resetButton = new JButton();
+        resetButton.setText("Replay");
+        resetButton.setSize(80, 65);
+        resetButton.setLocation(290, 395);
+        add(resetButton);
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == resetButton)
+                {
+                	Game.State = Game.STATE.MENU;
+                }
+            }
+        });
+        
         g.setColor(Color.WHITE);
         g.setFont(font);
         g.drawString(message, (BOARD_WIDTH - ft.stringWidth(message)) / 2, BOARD_HEIGHT / 2);
@@ -419,6 +439,4 @@ public class Game extends JPanel {
 
 
     }
-
-
 }
