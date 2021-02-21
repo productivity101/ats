@@ -1,6 +1,7 @@
 package Game;
 
 //Imports
+
 import Sprites.Enemy;
 import Sprites.EnemyWaves;
 import Sprites.Player;
@@ -41,7 +42,8 @@ public class Game extends JPanel {
     private Integer level; //Game Level
     private boolean gameOver; //Check game status
     private String message;   //message for the end of a game
-    protected JButton enter; // Jbutton
+    protected JButton quit; // Jbutton
+    protected JButton re;
 
     Game() {
         //If game is started initialize these variables
@@ -60,14 +62,23 @@ public class Game extends JPanel {
         addMouseListener(new MouseInput()); // for Mouse event
         setFocusable(true);
         setBackground(new Color(168, 219, 127, 116)); //Set the color of background at start up menu
-
-
+        // Set the Jbutton Stuff
+        quit = new JButton("Quit");
+        quit.setBounds(145, 283, 135, 25);
+        // add(enter);
+        quit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
     }
 
     // Get level
     public Integer getLevel() {
         return this.level;
     }
+
     // Start the thread
     @Override
     public void addNotify() {
@@ -83,7 +94,7 @@ public class Game extends JPanel {
         beforeTime = System.currentTimeMillis();
         //Loop while under level 6 and not game over yet
         while (level < 7 && !gameOver) {
-        	//Loop for each level
+            //Loop for each level
             while (inGame) {
                 repaint();
                 //If in GAME state, run animation cycle
@@ -103,15 +114,16 @@ public class Game extends JPanel {
                 }
                 beforeTime = System.currentTimeMillis();
             }
-            //Game
-            gameOver();
+
+            //gameOver();
             //Setup for next level
             player = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X, START_Y, ID.Player);
             player2 = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X - 180, START_Y, ID.Player2);
             enemyWave = new EnemyWaves(level);
             inGame = true;
         }
-        gameOver();
+        State = STATE.GAMEOVER;
+        //gameOver();
     }
 
     /*
@@ -119,15 +131,14 @@ public class Game extends JPanel {
      */
     @Override
     public void paintComponent(Graphics g) {
-
         if (State == STATE.GAME) {
             super.paintComponent(g);
-            if (getLevel() ==1) g.drawImage(img, 0, 0, null); // background image
-            if (getLevel()==2 ) g.drawImage(img2, 0, 0, null); // background image
-            if (getLevel()==3 ) g.drawImage(img3, 0, 0, null); // background image
-            if (getLevel()==4 ) g.drawImage(img4, 0, 0, null); // background image
-            if (getLevel()==5 ) g.drawImage(img5, 0, 0, null); // background image
-            if (getLevel()==6 ) g.drawImage(img6, 0, 0, null); // background image
+            if (getLevel() == 1) g.drawImage(img, 0, 0, null); // background image
+            if (getLevel() == 2) g.drawImage(img2, 0, 0, null); // background image
+            if (getLevel() == 3) g.drawImage(img3, 0, 0, null); // background image
+            if (getLevel() == 4) g.drawImage(img4, 0, 0, null); // background image
+            if (getLevel() == 5) g.drawImage(img5, 0, 0, null); // background image
+            if (getLevel() == 6) g.drawImage(img6, 0, 0, null); // background image
             Font font = new Font("Roboto", Font.PLAIN, 18);
             g.setColor(Color.white);
             g.setFont(font); //set font
@@ -152,7 +163,6 @@ public class Game extends JPanel {
                 player2.getMissile().draw(g, this);
 
             enemyWave.draw(g, this);
-
         } else if (State == STATE.MENU) {
             menu.render(g);
             super.paintComponent(g);
@@ -192,16 +202,55 @@ public class Game extends JPanel {
 
         } else if (State == STATE.QUIT) {
             System.exit(0);
+        } else if (State == STATE.GAMEOVER) {
+            repaint();
+            Graphics2D g2d = (Graphics2D) g;
+            Game.State = STATE.GAMEOVER;
+
+            re = new JButton("Back to main menu");
+            re.setBounds(145, 200, 135, 25);
+            // add(enter);
+            re.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    State = STATE.MENU;
+                    System.out.println("Retry");
+                    menu.render(g);
+                    g.setColor(Color.green);
+                    repaint();
+                }
+            });
+            Shape replayButton = new Rectangle((BOARD_WIDTH - 10) / 2 - 100, BOARD_HEIGHT / 2 + 80, 60, 60);
+            Shape quitButton = new Rectangle((BOARD_WIDTH - 10) / 2 + 80, BOARD_HEIGHT / 2 + 80, 60, 60);
+
+
+            //Background image for different level
+            if (getLevel() == 1) g.drawImage(img, 0, 0, null); // background image
+            if (getLevel() == 2) g.drawImage(img2, 0, 0, null); // background image
+            if (getLevel() == 3) g.drawImage(img3, 0, 0, null); // background image
+            if (getLevel() == 4) g.drawImage(img4, 0, 0, null); // background image
+            if (getLevel() == 5) g.drawImage(img5, 0, 0, null); // background image
+            if (getLevel() == 6) g.drawImage(img6, 0, 0, null); // background image
+            Font font = new Font("Roboto", Font.BOLD, 30);
+            FontMetrics ft = this.getFontMetrics(font);
+            g.setColor(Color.WHITE);
+            g.setFont(font);
+            g.drawString(message, (BOARD_WIDTH - ft.stringWidth(message)) / 2, BOARD_HEIGHT / 2);
+            g.drawString("Final Score: " + SCORE, (BOARD_WIDTH - 10) / 2 - 100, BOARD_HEIGHT / 2 + 50);
+            g.drawImage(retry, (BOARD_WIDTH - 10) / 2 - 100, BOARD_HEIGHT / 2 + 80, null);
+            g.drawImage(cross, (BOARD_WIDTH - 10) / 2 + 70, BOARD_HEIGHT / 2 + 70, null);
+            g2d.draw(replayButton);
+            g2d.draw(quitButton);
+            add(quit);
+            add(re);
         }
-
-
     }
 
     //Function for game mechanics
     private void animationCycle() {
-    	//If no enemies left
+        //If no enemies left
         if (enemyWave.getNumberOfEnemies() <= 0) {
-        	//Set level to be over and increment level
+            //Set level to be over and increment level
             inGame = false;
             level += 1;
             message = "Congratulations. You Won!";
@@ -209,12 +258,12 @@ public class Game extends JPanel {
 
         //If player was shot by enemy bomb
         if (player.getObjectState()) {
-        	//Decrement lives
+            //Decrement lives
             lives--;
             //Revive if there are lives remaining
             if (lives != 0) player.revive();
             else {
-            	//Set gameOver if no lives remaining
+                //Set gameOver if no lives remaining
                 inGame = false;
                 gameOver = true;
                 message = "Game Over!";
@@ -268,13 +317,13 @@ public class Game extends JPanel {
 
     //Function to check if player missiles collide with enemy
     private void collisionMissileEnemies() {
-    	//If player shot a missile
+        //If player shot a missile
         if (player.getMissile().getVisibility()) {
-        	//Check if collision for each enemy in enemyWave
+            //Check if collision for each enemy in enemyWave
             for (Enemy enemy : enemyWave.getEnemies())
-            	//If missile hit enemy
+                //If missile hit enemy
                 if (enemy.getVisibility() && player.getMissile().collisionWith(enemy)) {
-                	//Make enemy explode, set missile visible to false, increment score
+                    //Make enemy explode, set missile visible to false, increment score
                     enemy.explosion();
                     player.getMissile().dead();
                     SCORE++;
@@ -282,11 +331,11 @@ public class Game extends JPanel {
         }
         //If player2 shot a missile
         if (player2.getMissile().getVisibility()) {
-        	//Check if collision for each enemy in enemyWave
+            //Check if collision for each enemy in enemyWave
             for (Enemy enemy : enemyWave.getEnemies())
-            	//If missile hit enemy
+                //If missile hit enemy
                 if (enemy.getVisibility() && player2.getMissile().collisionWith(enemy)) {
-                	//Make enemy explode, set missile visible to false, increment score
+                    //Make enemy explode, set missile visible to false, increment score
                     enemy.explosion();
                     player2.getMissile().dead();
                     SCORE++;
@@ -296,15 +345,15 @@ public class Game extends JPanel {
 
     //Function to check if enemy bomb collide with player
     private void collisionBombPlayer() {
-    	//Loop for each enemy in enemyWave
+        //Loop for each enemy in enemyWave
         for (Enemy enemy : enemyWave.getEnemies()) {
-        	//If bomb hits player
+            //If bomb hits player
             if (enemy.getBomb().getVisibility() && enemy.getBomb().collisionWith(player)) {
-            	//Make player explode, set bomb visible to false
+                //Make player explode, set bomb visible to false
                 player.explosion();
                 enemy.getBomb().dead();
             } else if (enemy.getBomb().getVisibility() && enemy.getBomb().collisionWith(player2)) {
-            	//Make player2 explode, set bomb visible to false
+                //Make player2 explode, set bomb visible to false
                 player2.explosion();
                 enemy.getBomb().dead();
             }
@@ -312,33 +361,39 @@ public class Game extends JPanel {
     }
 
     //Function for displaying game over screen, shows final score
-    private void gameOver (){
-        addMouseListener(new MouseInput()); // for Mouse event
-        Shape replayButton = new Rectangle((BOARD_WIDTH - 10) / 2 - 100, BOARD_HEIGHT / 2 + 80, 60, 60);
-        Shape quitButton = new Rectangle((BOARD_WIDTH - 10) / 2 + 80, BOARD_HEIGHT / 2 + 80, 60, 60);
+    private void gameOver() {
+            /*
         Graphics g = this.getGraphics();
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        //Background image for different level
-        if (getLevel() ==1) g.drawImage(img, 0, 0, null); // background image
-        if (getLevel()==2 ) g.drawImage(img2, 0, 0, null); // background image
-        if (getLevel()==3 ) g.drawImage(img3, 0, 0, null); // background image
-        if (getLevel()==4 ) g.drawImage(img4, 0, 0, null); // background image
-        if (getLevel()==5 ) g.drawImage(img5, 0, 0, null); // background image
-        if (getLevel()==6 ) g.drawImage(img6, 0, 0, null); // background image
-        Font font = new Font("Roboto", Font.BOLD, 30);
-        FontMetrics ft = this.getFontMetrics(font);
-        enter = new JButton("Quit");
-        enter.setBounds(145, 283, 135, 25);
-        add(enter);
-        enter.addActionListener(new ActionListener() {
+        Game.State = STATE.GAMEOVER;
+
+        re = new JButton("Back to main menu");
+        re.setBounds(145, 200, 135, 25);
+        // add(enter);
+        re.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                State = STATE.MENU;
+                System.out.println("Retry");
+                menu.render(g);
+                g.setColor(Color.green);
+                repaint();
             }
         });
+        Shape replayButton = new Rectangle((BOARD_WIDTH - 10) / 2 - 100, BOARD_HEIGHT / 2 + 80, 60, 60);
+        Shape quitButton = new Rectangle((BOARD_WIDTH - 10) / 2 + 80, BOARD_HEIGHT / 2 + 80, 60, 60);
 
 
+        //Background image for different level
+        if (getLevel() == 1) g.drawImage(img, 0, 0, null); // background image
+        if (getLevel() == 2) g.drawImage(img2, 0, 0, null); // background image
+        if (getLevel() == 3) g.drawImage(img3, 0, 0, null); // background image
+        if (getLevel() == 4) g.drawImage(img4, 0, 0, null); // background image
+        if (getLevel() == 5) g.drawImage(img5, 0, 0, null); // background image
+        if (getLevel() == 6) g.drawImage(img6, 0, 0, null); // background image
+        Font font = new Font("Roboto", Font.BOLD, 30);
+        FontMetrics ft = this.getFontMetrics(font);
         g.setColor(Color.WHITE);
         g.setFont(font);
         g.drawString(message, (BOARD_WIDTH - ft.stringWidth(message)) / 2, BOARD_HEIGHT / 2);
@@ -347,21 +402,18 @@ public class Game extends JPanel {
         g.drawImage(cross, (BOARD_WIDTH - 10) / 2 + 70, BOARD_HEIGHT / 2 + 70, null);
         g2d.draw(replayButton);
         g2d.draw(quitButton);
-
-
+        add(quit);
+        add(re);
+        */
     }
 
-//    public void giveactionListener(ActionListener a) {
-//        enter.addActionListener(a);
-//    }
 
-
-
-//enum for different states of the game
+    //enum for different states of the game
     public enum STATE {
         MENU,
         GAME,
         PAUSE,
+        GAMEOVER,
         QUIT
     }
 
@@ -369,28 +421,31 @@ public class Game extends JPanel {
     private class KAdapter extends KeyAdapter {
 
         public void keyPressed(KeyEvent e) {
-        	//If game is currently active
+            //If game is currently active
             if (State == STATE.GAME) {
-            	//Check for keys entered to move players or shoot missiles
+                //Check for keys entered to move players or shoot missiles
                 int key = e.getKeyCode();
                 if (key == KeyEvent.VK_A) player.setVelX(-player.getSpeed());
                 if (key == KeyEvent.VK_D) player.setVelX(player.getSpeed());
                 if (key == KeyEvent.VK_W && !player.getMissile().getVisibility()) {
                     player.shootMyself();
                 }
-                
+
                 //For player2
                 if (key == KeyEvent.VK_LEFT) player2.setVelX(-player2.getSpeed());
                 if (key == KeyEvent.VK_RIGHT) player2.setVelX(player2.getSpeed());
                 if (key == KeyEvent.VK_UP && !player2.getMissile().getVisibility()) {
                     player2.shootMyself();
                 }
-                
+
                 //If "P" key pressed, pause the game
                 if (key == KeyEvent.VK_P) {
                     State = STATE.PAUSE;
                 }
-            //If game is paused
+//            if (key == KeyEvent.VK_R) {
+//                State = STATE.MENU;
+//            }
+                //If game is paused
             } else if (State == STATE.PAUSE) {
                 int key = e.getKeyCode();
                 //Resume game if "P" key is pressed again
@@ -398,13 +453,15 @@ public class Game extends JPanel {
                     State = STATE.GAME;
                 }
             } else if (State == STATE.MENU) {
-            	//Do nothing in menu
+                State = STATE.MENU;
+                System.out.println("Test");
             }
+
         }
 
         //Check for when a key is released
         public void keyReleased(KeyEvent e) {
-        	//If game is active
+            //If game is active
             if (State == STATE.GAME) {
                 int key = e.getKeyCode();
                 //Stop players from moving in a certain direction if key released
@@ -413,7 +470,7 @@ public class Game extends JPanel {
                 if (key == KeyEvent.VK_LEFT) player2.setVelX(0);
                 if (key == KeyEvent.VK_RIGHT) player2.setVelX(0);
             } else if (State == STATE.MENU) {
-            	//Do nothing in menu
+                //Do nothing in menu
             }
         }
 
@@ -422,3 +479,5 @@ public class Game extends JPanel {
 
 
 }
+
+
