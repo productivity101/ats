@@ -46,8 +46,8 @@ public class Game extends JPanel {
     Game() {
         //If game is started initialize these variables
         inGame = true;
-        lives = 3;
-        lives2 = 3;
+        lives = 1;
+        lives2 = 1;
         level = 2;
         // Initialise the game objects
         player = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X, START_Y, ID.Player);//Play1 set position
@@ -329,7 +329,9 @@ public class Game extends JPanel {
         Font font = new Font("Roboto", Font.BOLD, 30);
         FontMetrics ft = this.getFontMetrics(font);
         enter = new JButton("Quit");
-        enter.setBounds(145, 283, 135, 25);
+        enter.setBounds(476, 395, 60, 60);
+        //enter.setOpaque(false);
+        enter.setContentAreaFilled(false);
         add(enter);
         enter.addActionListener(new ActionListener() {
             @Override
@@ -337,8 +339,7 @@ public class Game extends JPanel {
                 System.exit(0);
             }
         });
-
-
+        
         g.setColor(Color.WHITE);
         g.setFont(font);
         g.drawString(message, (BOARD_WIDTH - ft.stringWidth(message)) / 2, BOARD_HEIGHT / 2);
