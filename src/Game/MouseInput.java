@@ -3,7 +3,7 @@ package Game;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class MouseInput implements MouseListener{
+public class MouseInput implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -22,30 +22,24 @@ public class MouseInput implements MouseListener{
         */
 
         // Play Button in Menu
-        if (mx >= Game.WIDTH / 2 + 300 && mx <= Game.WIDTH / 2 + 500)
-        {
-            if (my >= 200 && my <= 250)
-            {
+        if (mx >= Game.WIDTH / 2 + 300 && mx <= Game.WIDTH / 2 + 500) {
+            if (my >= 200 && my <= 250) {
                 //Pressed Play Button
                 Game.State = Game.STATE.GAME;
             }
         }
 
         // Help Button in Menu
-        if (mx >= Game.WIDTH / 2 + 300 && mx <= Game.WIDTH / 2 + 500)
-        {
-            if (my >= 300 && my <= 350)
-            {
+        if (mx >= Game.WIDTH / 2 + 300 && mx <= Game.WIDTH / 2 + 500) {
+            if (my >= 300 && my <= 350) {
                 //Pressed Help Button
                 Game.State = Game.STATE.GAME;
             }
         }
 
         // Quit Button in Menu
-        if (mx >= Game.WIDTH / 2 + 300 && mx <= Game.WIDTH / 2 + 500)
-        {
-            if (my >= 400 && my <= 450)
-            {
+        if (mx >= Game.WIDTH / 2 + 300 && mx <= Game.WIDTH / 2 + 500) {
+            if (my >= 400 && my <= 450) {
                 //Pressed Quit Button
                 Game.State = Game.STATE.QUIT;
             }

@@ -1,10 +1,10 @@
 package Game;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 
-
-public class MouseInputForGameOver implements MouseListener{
+public class MouseInputForGameOver implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -18,10 +18,8 @@ public class MouseInputForGameOver implements MouseListener{
 
         // Shape playButton = new Rectangle((BOARD_WIDTH-10)/2-100, BOARD_HEIGHT/2+80, 60,60);
         // Retry Menu
-        if (mx >= Game.WIDTH / 2 + 300 && mx <= Game.WIDTH / 2 + 500)
-        {
-            if (my >= 200 && my <= 250)
-            {
+        if (mx >= Game.WIDTH / 2 + 300 && mx <= Game.WIDTH / 2 + 500) {
+            if (my >= 200 && my <= 250) {
                 //Pressed Play Button
                 Game.State = Game.STATE.GAME;
             }
