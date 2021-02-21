@@ -4,7 +4,8 @@
     <list default="true" id="8fccc0da-a40c-4308-8d0e-f61ce2309b7a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game/GameObjectsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/GameObjectsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game/MouseInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/MouseInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game/MouseInputForGameOver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/MouseInputForGameOver.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +64,8 @@
       <workItem from="1613725003188" duration="9647000" />
       <workItem from="1613830586015" duration="4514000" />
       <workItem from="1613835406504" duration="437000" />
+      <workItem from="1613842653470" duration="315000" />
+      <workItem from="1613889475190" duration="3792000" />
     </task>
     <servers />
   </component>
