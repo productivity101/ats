@@ -92,38 +92,41 @@ public class Game extends JPanel {
         long beforeTime, timeDiff, sleep;
 
         beforeTime = System.currentTimeMillis();
-        //Loop while under level 6 and not game over yet
-        while (level < 7 && !gameOver) {
-            //Loop for each level
-            while (inGame) {
-                repaint();
-                //If in GAME state, run animation cycle
-                if (State == STATE.GAME) {
-                    animationCycle();       //mechanics of a game
-                }
-                timeDiff = System.currentTimeMillis() - beforeTime;
-                sleep = DELAY - timeDiff;
-
-                if (sleep < 0) {
-                    sleep = 2;
-                }
-                try {
-                    Thread.sleep(sleep);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                beforeTime = System.currentTimeMillis();
-            }
-
-            //gameOver();
-            //Setup for next level
-            player = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X, START_Y, ID.Player);
-            player2 = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X - 180, START_Y, ID.Player2);
-            enemyWave = new EnemyWaves(level);
-            inGame = true;
+        while(true) {
+	        //Loop while under level 6 and not game over yet
+	        while (level < 7 && !gameOver) {
+	            //Loop for each level
+	            while (inGame) {
+	                repaint();
+	                //If in GAME state, run animation cycle
+	                if (State == STATE.GAME) {
+	                    animationCycle();       //mechanics of a game
+	                }
+	                timeDiff = System.currentTimeMillis() - beforeTime;
+	                sleep = DELAY - timeDiff;
+	
+	                if (sleep < 0) {
+	                    sleep = 2;
+	                }
+	                try {
+	                    Thread.sleep(sleep);
+	                } catch (InterruptedException e) {
+	                    e.printStackTrace();
+	                }
+	                beforeTime = System.currentTimeMillis();
+	            }
+	
+	            //gameOver();
+	            //Setup for next level
+	            player = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X, START_Y, ID.Player);
+	            player2 = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X - 180, START_Y, ID.Player2);
+	            enemyWave = new EnemyWaves(level);
+	            inGame = true;
+	        }
+	        State = STATE.GAMEOVER;
+	        repaint();
+	        //gameOver();
         }
-        State = STATE.GAMEOVER;
-        //gameOver();
     }
 
     /*
@@ -164,13 +167,21 @@ public class Game extends JPanel {
 
             enemyWave.draw(g, this);
         } else if (State == STATE.MENU) {
+        	//System.out.println("Rendering?");
             menu.render(g);
             super.paintComponent(g);
             g.setColor(Color.green); // background image
         } else if (State == STATE.PAUSE) {
             // Need to change the pause menu
             super.paintComponent(g);
-            g.drawImage(img, 0, 0, null); // background image
+            
+            //Background image for different level
+            if (getLevel() == 1) g.drawImage(img, 0, 0, null); // background image
+            if (getLevel() == 2) g.drawImage(img2, 0, 0, null); // background image
+            if (getLevel() == 3) g.drawImage(img3, 0, 0, null); // background image
+            if (getLevel() == 4) g.drawImage(img4, 0, 0, null); // background image
+            if (getLevel() == 5) g.drawImage(img5, 0, 0, null); // background image
+            if (getLevel() == 6) g.drawImage(img6, 0, 0, null); // background image
 
             Font font = new Font("Roboto", Font.PLAIN, 18);
             g.setColor(Color.white);
@@ -205,7 +216,7 @@ public class Game extends JPanel {
         } else if (State == STATE.GAMEOVER) {
             repaint();
             Graphics2D g2d = (Graphics2D) g;
-            Game.State = STATE.GAMEOVER;
+            //State = STATE.GAMEOVER;
 
             re = new JButton("Back to main menu");
             re.setBounds(145, 200, 135, 25);
@@ -214,10 +225,14 @@ public class Game extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     State = STATE.MENU;
-                    System.out.println("Retry");
+                    lives = 3;
+                    lives2 = 3;
+                    level = 1;
+                    gameOver = false;
+                    enemyWave = new EnemyWaves(level);
                     menu.render(g);
                     g.setColor(Color.green);
-                    repaint();
+                    //repaint();
                 }
             });
             Shape replayButton = new Rectangle((BOARD_WIDTH - 10) / 2 - 100, BOARD_HEIGHT / 2 + 80, 60, 60);
