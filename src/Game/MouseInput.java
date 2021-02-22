@@ -31,7 +31,7 @@ public class MouseInput implements MouseListener {
 
         // Help Button in Menu
         if (mx >= Game.WIDTH / 2 + 300 && mx <= Game.WIDTH / 2 + 500) {
-            if (my >= 300 && my <= 350) {
+            if (my >= 150 && my <= 200) {
                 //Pressed Help Button
                 Game.State = Game.STATE.GAME;
             }
@@ -39,7 +39,7 @@ public class MouseInput implements MouseListener {
 
         // Quit Button in Menu
         if (mx >= Game.WIDTH / 2 + 300 && mx <= Game.WIDTH / 2 + 500 && Game.State == Game.STATE.MENU) {
-            if (my >= 400 && my <= 450) {
+            if (my >= 220 && my <= 270) {
                 //Pressed Quit Button
                 Game.State = Game.STATE.QUIT;
             }
