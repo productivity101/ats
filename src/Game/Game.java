@@ -50,7 +50,7 @@ public class Game extends JPanel {
         inGame = true;
         lives = 3;
         lives2 = 3;
-        level = 2;
+        level = 1;
         // Initialise the game objects
         player = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X, START_Y, ID.Player);//Play1 set position
         player2 = new Player(PLAYER_HEIGHT, PLAYER_WIDTH, START_X - 180, START_Y, ID.Player2); //Play2 set position
@@ -218,24 +218,8 @@ public class Game extends JPanel {
             Graphics2D g2d = (Graphics2D) g;
             //State = STATE.GAMEOVER;
 
-            re = new JButton("Back to main menu");
-            re.setBounds(145, 200, 135, 25);
-            // add(enter);
-            re.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    State = STATE.MENU;
-                    lives = 3;
-                    lives2 = 3;
-                    level = 1;
-                    gameOver = false;
-                    enemyWave = new EnemyWaves(level);
-                    menu.render(g);
-                    g.setColor(Color.green);
-                    //repaint();
-                }
-            });
-            Shape replayButton = new Rectangle((BOARD_WIDTH - 10) / 2 - 100, BOARD_HEIGHT / 2 + 80, 60, 60);
+
+
             Shape quitButton = new Rectangle((BOARD_WIDTH - 10) / 2 + 80, BOARD_HEIGHT / 2 + 80, 60, 60);
 
 
@@ -252,12 +236,10 @@ public class Game extends JPanel {
             g.setFont(font);
             g.drawString(message, (BOARD_WIDTH - ft.stringWidth(message)) / 2, BOARD_HEIGHT / 2);
             g.drawString("Final Score: " + SCORE, (BOARD_WIDTH - 10) / 2 - 100, BOARD_HEIGHT / 2 + 50);
-            g.drawImage(retry, (BOARD_WIDTH - 10) / 2 - 100, BOARD_HEIGHT / 2 + 80, null);
-            g.drawImage(cross, (BOARD_WIDTH - 10) / 2 + 70, BOARD_HEIGHT / 2 + 70, null);
-            g2d.draw(replayButton);
-            g2d.draw(quitButton);
+
+
             add(quit);
-            add(re);
+
         }
     }
 
