@@ -43,7 +43,6 @@ public class Game extends JPanel {
     private boolean gameOver; //Check game status
     private String message;   //message for the end of a game
     protected JButton quit; // Jbutton
-    protected JButton re;
 
     Game() {
         //If game is started initialize these variables
@@ -62,10 +61,11 @@ public class Game extends JPanel {
         addMouseListener(new MouseInput()); // for Mouse event
         setFocusable(true);
         setBackground(new Color(168, 219, 127, 116)); //Set the color of background at start up menu
-        // Set the Jbutton Stuff
+        // Set the quit button
         quit = new JButton("Quit");
-        quit.setBounds(145, 283, 135, 25);
-        // add(enter);
+        // Shape quitButton = new Rectangle((BOARD_WIDTH - 10) / 2 + 80, BOARD_HEIGHT / 2 + 80, 60, 60);
+        quit.setBounds((BOARD_WIDTH) /2 - 60, BOARD_HEIGHT / 2 + 50, 135, 50);
+        quit.setFont(new Font("Arial" , Font.BOLD, 40));
         quit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -218,11 +218,6 @@ public class Game extends JPanel {
             Graphics2D g2d = (Graphics2D) g;
             //State = STATE.GAMEOVER;
 
-
-
-            Shape quitButton = new Rectangle((BOARD_WIDTH - 10) / 2 + 80, BOARD_HEIGHT / 2 + 80, 60, 60);
-
-
             //Background image for different level
             if (getLevel() == 1) g.drawImage(img, 0, 0, null); // background image
             if (getLevel() == 2) g.drawImage(img2, 0, 0, null); // background image
@@ -230,16 +225,16 @@ public class Game extends JPanel {
             if (getLevel() == 4) g.drawImage(img4, 0, 0, null); // background image
             if (getLevel() == 5) g.drawImage(img5, 0, 0, null); // background image
             if (getLevel() == 6) g.drawImage(img6, 0, 0, null); // background image
-            Font font = new Font("Roboto", Font.BOLD, 30);
+            Font font = new Font("Roboto", Font.BOLD, 70);
+            Font font1 = new Font("Arial" , Font.BOLD, 50);
             FontMetrics ft = this.getFontMetrics(font);
             g.setColor(Color.WHITE);
             g.setFont(font);
-            g.drawString(message, (BOARD_WIDTH - ft.stringWidth(message)) / 2, BOARD_HEIGHT / 2);
-            g.drawString("Final Score: " + SCORE, (BOARD_WIDTH - 10) / 2 - 100, BOARD_HEIGHT / 2 + 50);
-
-
+            g.drawString(message, (BOARD_WIDTH - ft.stringWidth(message)) / 2, BOARD_HEIGHT / 2 -70);
+            g.setFont(font1);
+            g.setColor(Color.WHITE);
+            g.drawString("Final Score: " + SCORE, (BOARD_WIDTH - 10) / 2 - 160, BOARD_HEIGHT / 2 + 10);
             add(quit);
-
         }
     }
 
